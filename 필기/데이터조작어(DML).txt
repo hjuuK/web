@@ -1,0 +1,230 @@
+데이터 조작어(DML) - 검색
+1. WHERE 조건
+	조건식 : 참 거짓을 판별하는 연산식
+1) 비교
+	같다 : =
+	다르다 : !=, <>, ^=
+
+2) 범위
+	컬럼명 BETWEEN A AND B :				// SELECT * FROM Book WHERE price BETWEEN 10000 AND 20000;
+		컬럼명 >= A AND 컬럼명 <= B
+
+	SELECT * FROM Orders WHERE orderdate >= '2014-07-03' AND orderdate <= '2014-07-07'; 
+	// SELECT * FROM Orders WHERE orderdate BETWEEN'2014-07-03' AND '2014-07-07';
+
+3) 집합
+	IN : 교집합			// SELECT * FROM Book WHERE publisher IN('굿스포츠', '대한미디어');
+	NOT IN : 차집합	// SELECT * FROM Book WHERE publisher NOT IN('굿스포츠', '대한미디어');
+	
+	참고)
+		오라클, MSSQL
+			교집합 : INTERSECT
+			차집합 : MINUS
+
+4) 패턴
+	LIKE
+		- 컬럼명 LIKE '단어' - 컬럼명이 단어와 일치하는 패턴
+											 = 
+		- 컬럼명 LIKE '단어%' - 컬럼명이 단어로 시작하는 패턴
+		- 컬럼명 LIKE '%단어' - 컬럼명이 단어로 끝나는 패턴
+		- 컬럼명 LIKE '%단어%' - 컬럼명에 단어가 포함되는 패턴		// goodsNm LIKE '%닭가슴살%'
+																							// goodsNm LIKE '_가슴살%' -> 첫글자는 아무거나 나오고 두번째글자부터 가슴살로 시작하는 패턴
+																							
+		SELECT * FROM Book WHERE (publisher='굿스포츠' OR publisher='대한미디어') AND bookname LIKE '%축구%'; // 범위 축소해서 정확하게 검색
+		=> SELECT * FROM Book WHERE publisher IN ('굿스포츠', '대한미디어') AND bookname LIKE '%축구%'; // 이럴때는 IN을 쓰는게 더 효율적임
+
+5) NULL
+	- 값이 없음
+	- 연산 불가
+	
+	- IS NULL : NULL 인 조건						// SELECT * FROM customer WHERE phone IS NULL;
+	- IS NOT NULL : NULL 이 아닌 조건		// SELECT * FROM customer WHERE phone IS NOT NULL;
+
+6) 복합조건
+
+	NOT 조건 : 조건을 반대로
+
+
+2. ORDER BY
+	컬럼명 [ASC - 오름차순, 기본값|DESC - 내림차순]
+	
+3. 집계함수와 GROUP BY
+	- GROUP BY : 컬럼의 동일한 값을 가지고 그룹화 할 때
+							-> 통계를 내기 위해서
+							
+	COUNT(컬럼명 ...) : 레코드 갯수(NULL 제외)
+	SUM(컬럼명 ...) : 합계
+	AVG(컬럼명 ...) : 평균
+	MAX(컬러명 ...) : 최대값
+	MIN(컬럼명 ...) : 최소값
+	
+	// 제약 : GROUP BY 에 있는 항목만 조회 가능
+	
+	참고)
+		AS - Alias : 별칭  / 컬럼명, 테이블명 / 생략 가능
+			 - 별칭에서 ""를 생략 가능 	// SELECT SUM(saleprice) 주문합계 FROM Orders;
+					- 생략이 불가한 경우 : 별칭에 띄어쓰기가 있는 형태 -> 따옴표를 사용 SELECT SUM(saleprice) "주문 합계" FROM Orders;
+		
+			참고)
+				오라클	
+					테이블명 별칭을 사용할때 AS는 사용 불가
+					
+	HAVING 절
+		- GROUP BY와 함께 사용
+		- 집계함수의 조건절(WHERE절에서는 집계함수 조건 X) => HAVING 절에서만 사용 가능
+			// 가격이 8,000원 이상인 도서를 구매한 고객에 대해서 고객별 주문 도서의 총 수량을 구하시오. 단 두권 이상 구매한 고객만 구하시오.
+			// SELECT COUNT(*) "총 수량", custid FROM Orders WHERE saleprice >= 8000 GROUP BY custid HAVING COUNT(*) >= 2;
+			
+4. 두 개 이상의 테이블에서 SQL 질의 - 조인
+	카티전 프로덕트 연산 : 무작위 순서쌍
+	(데카르트 곱)
+	
+	
+	SELECT ... FROM 테이블, 테이블 ...
+	
+		- 의미있는 데이터 -> 공통 값을 가지고 조회 조건
+		
+	[AS] 별칭		// SELECT c.custid, c.name, o.orderid, o.bookid, o.saleprice FROM Customer c, Orders o WHERE c.custid = o.custid;
+
+	동등조인(INNER JOIN) : 같은 값을 가지고 테이블 연결
+			JOIN - 표준 SQL
+
+			FROM 테이블명1 INNER JOIN 테이블명2 ON 테이블명1.공통컬럼 = 테이블2.공통컬럼
+																	 USING(공통컬럼)
+			//SELECT * FROM Customer c INNER JOIN Orders o ON c.custid = o.custid; -> 표준 -- INNER 생략 가능
+			//SELECT * FROM Customer c JOIN Orders o USING(custid);
+
+	
+	//고객의 이름과 고객이 주문한 도서의 판매가격을 검색하시오.
+	//SELECT c.name, o.saleprice FROM Customer c, Orders o WHERE c.custid = o.custid;
+
+	//고객별로 주문한 모든 도서의 총 판매액을 구하고, 고객별로 정렬하시오.
+	//SELECT c.name, SUM(o.saleprice) FROM Orders o, Customer c WHERE o.custid = c.custid GROUP BY c.name ORDER BY c.name;
+	
+	//고객의 이름과 고객이 주문한 도서의 이름을 구하시오
+	//SELECT c.name, b.bookname FROM Orders o, Customer c, Book b WHERE o.custid = c.custid AND o.bookid = b.bookid;
+	
+	//가격이 20,000원인 도서를 주문한 고객의 이름과 도서의 이름을 구하시오.
+	//SELECT c.name, b.bookname FROM Orders o, Customer c, Book b WHERE o.custid = c.custid AND o.bookid = b.bookid AND b.price=20000;
+	
+	외부조인(OUTER JOIN)
+		FROM 테이블명1 LEFT|RIGHT OUTER JOIN 테이블명2 ON	테이블명1.공통항목 = 테이블명2.공통항목
+		
+		테이블1 LEFT OUTER JOIN 테이블2
+		-> 테이블1은 전체가 다 나온다, 테이블2는 테이블1과 공통값이 있으면 나오고 없으면 NULL
+		
+		테이블1 RIGHT OUTER JOIN 테이블2
+		-> 테이블2는 전체가 다 나온다, 테이블1은 테이블2와 공통값 있으면 나오고 없으면 NULL
+		
+		//SELECT * FROM Customer c LEFT OUTER JOIN Orders o ON c.custid = o.custid;	
+			-- OUTER 생략 가능	//SELECT * FROM Customer c LEFT JOIN Orders o ON c.custid = o.custid;
+		//SELECT * FROM Orders o RIGHT OUTER JOIN Customer c ON o.custid = c.custid;
+	
+					
+	
+5. 부속질의
+	SELECT 문 안에 SELECT 문이 포함된 구조
+	
+	- 스칼라 부속질의
+		참고)
+			스칼라 : 단일값
+			- 부속질의가 단일값으로 나오는 형태
+			- SELECT ... FROM 
+			- 비교 조건		// 비교조건은 반드시 단일값
+				>, <, =, <=, >=
+				
+			- 복수의 값 : IN, NOT IN		//SELECT * FROM Customer WHERE custid IN (SELECT custid FROM Orders);
+				
+			
+	- 인라인 뷰
+		SELECT ... FROM (SELECT ...)
+			- 가상의 테이블		//SELECT bookname FROM (SELECT bookname, publisher FROM Book WHERE publisher IN ('대한미디어', '굿스포츠', '삼성당')) b;
+			
+	- 상관 부속 질의
+		//출판사별로 출판사의 평균 도서 가격보다 비싼 도서를 구하시오.
+		//SELECT b1.bookname, b1.price, b1.publisher FROM Book b1 WHERE b1.price > (SELECT AVG(b2.price) FROM Book b2 WHERE b1.publisher = b2.publisher);
+
+
+		SELECT * FROM boardDatas b WHERE b.totalComments <> (SELECT COUNT(*) FROM boardCommentss c WHERE b.id = c.idBoardData)
+
+6. 집합 연산
+	교집합
+		IN
+		
+		참고)
+			오라클, MSSQL
+				INTERSECT
+				
+	합집합
+		집합 : 중복 X
+		
+		UNION : 중복 X
+			//(SELECT * FROM Book WHERE price >= 10000 UNION SELECT * FROM Book WHERE price <= 15000) ORDER BY price;
+		
+		UNION ALL : 중복 허용	
+			//(SELECT * FROM Book WHERE price >= 10000 UNION ALL SELECT * FROM Book WHERE price <= 15000) ORDER BY price;
+		
+	차집합
+		NOT IN
+		
+		참고)
+			오라클, MSSQL
+				MINUS
+
+7. EXISTS
+	- 부속질의 결과가 있으면 참
+		//SELECT * FROM Customer WHERE EXISTS (SELECT * FROM Orders WHERE custid=2);
+	- NOT EXISTS
+
+
+데이터 조작어 - 삽입, 수정, 삭제
+1. INSERT문 - 삽입
+	INSERT INTO 테이블명 (컬럼명1, 컬러명2, ...) VALUES (값1, 값2, ...);
+	
+	//Book 테이블이 새로운 도서 '스포츠 의학'을 삽입하시오. 스포츠 의학은 한솔의학서적에서 출간했으며 가격은 90,000원이다.
+	//INSERT INTO Book (bookid, bookname, publisher, price) VALUES (11, '스포츠 의학', '한솔의학서적', 90000);
+	-- 전체 컬럼명과 값의 순서와 갯수가 동일하면 생략 가능 // INSERT INTO Book VALUES (11, '스포츠 의학', '한솔의학서적', 90000);
+	
+	구조가 동일한 특정 테이블의 값을 복사
+	INSERT INTO 복사될 테이블명 SELECT ... FROM 복사할 테이블;
+	//INSERT INTO Book SELECT * FROM imported_book;
+	
+	CREATE TABLE 복사할 테이블명 AS SELECT ...
+	//CREATE TABLE NewBook AS SELECT * FROM Book;
+	
+2. UPDATE문 - 수정
+	
+	UPDATE 테이블명
+		SET
+			컬럼명1 = 값
+			컬렴명2 = 값
+			...
+	WHERE 조건식
+		-> 조건식이 없으면 전체 데이터가 변경 (매우 위험함)
+		
+	//Customer 테이블에서 고객번호가 5인 고객의 주소를 '대한민국 부산'으로 변경하시오.
+	//UPDATE Customer SET address='대한민국 부산' WHERE custid=5;
+	
+	//Book 테이블에서 11번 '스포츠 의학'의 출판사를 Imported_book 테이블의 21번 책의 출판사와 동일하게 변경하시오.
+	//UPDATE Book SET publisher=(SELECT publisher FROM Imported_book WHERE bookid=21) WHERE bookid=11;
+
+3. DELETE문 - 삭제
+	DELETE FROM 테이블명 -> 전체 삭제 (매우 위험)
+	
+	DELETE FROM 테이블명 WHERE 조건식;
+		
+	//Book 테이블에서 도서번호가 11인 도서를 삭제하시오.
+	//DELETE FROM Book WHERE bookid=11;
+	
+	외래키로 자식테이블에 연결되어있을 경우 삭제 불가
+	
+	
+증감번호
+- 제약조건 AUTO_INCREMENT
+//CREATE TABLE NewBook2 (bookid INT AUTO_INCREMENT, bookname VARCHAR(20) NOT NULL, publisher VARCHAR(20) NOT NULL, 
+	price INT, regdate DATETIME DEFAULT NOW(), PRIMARY KEY(bookid));
+	
+참고)
+	오라클
+		시퀀스 객체
+			

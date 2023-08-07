@@ -1,0 +1,126 @@
+Collections
+  - 컬렉션의 편의 기능
+   - java.util
+
+   참고)
+     정렬 기준
+        java.lang.Comparable
+	int compareTo
+
+        java.util.Comparator
+	int compare
+
+
+열거형(enums)
+1. 열거형이란?
+  - 용도가 한정된 클래스의 일종
+   - 상수만을 위한 클래스
+   - 생성자는 무조건 private 형태 : 내부에서만 객체 생성 가능
+
+2. 열거형 정의와 사용
+   enum 클래스명 {
+	상수명, 상수명, ...
+   }
+
+3. 모든 열거형의 상위 클래스 - java.lang.Enum
+  - java.lang.Enum 클래스의 하위 클래스
+
+4. Enum 클래스에 정의된 메서드
+   String name() : 상수이름(BUS, SUBWAY, TAXI)
+  int ordinal() : 상수의 순서 번호(0부터 시작)
+  static E valueOf(Class<E> class, String name)
+
+5. 컴파일러가 자동으로 추가해주는 메서드
+   E valueOf(String name);
+
+   참고)
+     Enum 클래스의 각 상수는 정의된 Enum 클래스의 정적 상수 객체
+
+
+-------------------------------
+
+public abstract class Transportation extends java.lang.Enum {
+
+    public static final BUS = new Transportation();
+
+    public static final SUBWAY = new Transportation();
+
+    public static final TAXY = new Transportation();
+
+    private Transportation() {}
+}
+
+---------------------------------
+
+6. 열거형에 멤버 추가하기
+7. 열거형에 추상메서드 추가하기
+
+
+--------------------------------
+
+열거형 클래스
+enum 클래스 {
+	샹수명,
+	샹수명,
+}
+- 상수만을 위한 클래스
+
+1) java.lang.Enum의 하위클래스
+	String name() : 상수명
+	int ordinal() : 상수의 순서(0부터 시작)
+	static E valueOf(Class<E> class, String name); : 문자열 이름 -> Enum 클래스의 상수
+	
+	컴파일러가 자동 추가해 주는 메서드
+	   valueOf : 문자열 -> Enum 클래스 상수
+
+2) enum 클래스의 정의된 상수
+   - 정적 상수 객체
+
+3) 모든 생성자가 private : 내부에서만 상수 형태로 객체 생성이 가능
+
+4) 추상클래스 : 추상메서드 정의 가능
+
+--------------------------------
+
+애너테이션(annotation)
+  - 주석, 주해 : 설정
+   - 정보 전달
+   - @interface 애너테이션 명 {
+
+   }
+1. 에너테이션이란?
+2. 표준 에너테이션
+   - JDK에 기본 정의된 애너테이션
+
+3. 메타 에너테이션
+   - 애너테이션을 만들 수 있는 애너테이션
+   - @Target : 적용 범위
+	ElementType
+   - @Retention : 정보 전달 시점
+	RetentionPolicy
+		.SOURCE : java 소스 상에 존재, class 파일에서 제거, 정보 전달 시점 : 컴파일 시
+		.CLASS : 기본값, java 소스상, class 파일에 존재, 정보 전달 시점 X
+		.RUNTIME : java 소스상, class 파일에도 존재, 정보 전달 시점 : 실행 시점
+
+4. @interface ... 
+	- java.lang.annotation.Annotation 의 하위 인터페이스
+
+Class 클래스의
+
+
+
+--------------------------------------------------
+
+람다식?
+- 메서드를 하나의 식으로 표현
+
+참고)
+- 함수형 프로그래밍
+     - 함수 - 단일 기능
+     - 함수가 값
+   	- 매개변수
+	- 반환값
+
+     - 자바는 함수가 함수, 값으로 절대 사용 X
+
+- 인터페이스 : 객체가 되는 조건 (지역, 멤버 변수)

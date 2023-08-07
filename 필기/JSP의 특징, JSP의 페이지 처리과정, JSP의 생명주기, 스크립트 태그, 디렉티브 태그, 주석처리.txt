@@ -1,0 +1,102 @@
+1. JSP의 특징
+1) JSP는 서블릿 기술의 확장
+2) JSP는 유지 관리가 용이
+3) JSP는 빠른 개발이 가능
+4) JSP로 개발하면 코드 길이를 줄일 수 있다.
+
+2. JSP의 페이지 처리과정
+hello.jsp -> hello_jsp.java -> hello_jsp.class -> 생성
+
+3. JSP 생명 주기
+_jspInit() - 한번만 호출
+
+_jspService(HttpServletRequest request, HttpServletResponse response) : 매요청마다 호출
+- jsp 페이지에 작성 소스의 대부분은 _jspService 지역 안에 번역 된다.
+
+_jspDestroy() - 객체 소멸 직전에 호출
+
+
+4. 스크립트 태그
+1) 선언문(declaration)
+<%!
+	자바코드...
+%>
+- 번역위치 : 클래스명 바로 아래쪽에 번역
+- 정의하는 변수는 모두 멤버 변수(인스턴스 변수)
+
+2) 스크립틀릿(scriptlet)
+<%
+	자바코드...		// 여기서의 변수는 _jspService의 지역변수
+%>
+- 번역 위치가 _jspService 지역 내부
+- 정의하는 변수는 모두 지역변수
+- 함수, 메서드 정의 X
+
+3) 표현문(expression)
+<%=변수%>
+
+out.print(변수);
+
+5. 디렉티브 태그
+- JSP 페이지를 어떻게 처리할 것인지를 설정하는 태그
+- <%@ ... %>
+1) page : JSP 페이지에 대한 정보 설정
+<%@ page 속성명="값" 속성명="값" %>
+
+2) include
+- 페이지 출력 결과물을 물리적으로 번역된 서블릿에 추가
+<%@ include file="jsp페이지, text, html ..." %>
+
+3) taglib
+	JSTL(JSP Standard Tag Library) : 태그 형태의 편의 라이브러리
+		core 라이브러리
+			3.0
+			uri="jakarta.tags.core"
+			
+			1.2
+			uri="http://java.sun.com/jsp/jstl/core"
+		fmt 라이브러리
+			3.0
+			uri="jakarta/tags.fmt"
+			
+			1.2
+			uri="http://java.sun.com/jsp/jstl/fmt"
+		functions 라이브러리
+			3.0
+			uri="jakarta.tags.functions"
+			
+			1.2
+			uri="http://java.sun.com/jsp/jstl/functions"
+		sql (X)
+	
+	servlet 6.0
+	JSTL 3.0
+		- JSTL API
+		- JSTL Implemetation
+		
+	
+	JSTL 1.2
+
+
+6. JSP의 주석 처리
+<%-- 주석... --%>
+- JSP 번역이 되지 않으므로 : 프로그램 실행 배제
+(JSP -> 서블릿 번역)
+
+참고)
+//
+/* ~ */
+(컴파일러가 class 파일을 생성할 때 그때 배제)
+- JSP가 번역해서 서블릿 클래스에 추가
+
+
+7. 내장 객체(_jspService에 정의된 지역 변수) ⭐⭐암기 필요
+HttpServletRequest request : 요청관련 정보, 기능
+HttpServletResponse response : 응답관련 정보, 기능
+PageContext pageContext : JSP 페이지의 환경 정보 + 기능 / jakarta.servlet.jsp
+ServletContext application : 애플리케이션 환경에 대한 정보 + 기능
+ServletConfig config : 서블릿 설정
+HttpSession session : 개인화된 서비스 구현 기술 중 하나
+Object page = this
+JspWriter out
+Throwable exception / page 디렉티브에 isErrorPage="true"

@@ -1,0 +1,89 @@
+커스텀 액션
+
+1. 커스텀 액션을 만드는 방법
+1) 태그 파일을 작성해서 만드는 방법
+	확장자 .tag
+	- 번역 기술 :
+2) 태그 클래스를 작성해서 만드는 방법
+	- SimpleTag 인터페이스
+	- SimpleTagSupport 클래스
+		- doTag
+
+2. 태그파일을 이용해서 커스텀 액션 만들기
+1) 태그 파일에서 사용할 수 있는 지시어
+<%@ tag ...
+참고)
+	tag 속성 -> page 속성과 거의 비슷
+		- body-content
+						: empty - 단일 태그
+						
+						- 여는태그, 닫는태그 -
+						: scriptless - 태그 안쪽에 자바 코드 X, EL식, 다른 태그, 액션 태그는 사용 가능
+						: tagdependent - 태그의 내용물이 전부 문자열로 인식, EL식 번역 X
+		- trimDirectiveWhitespaces : true -> 태그 안쪽에 불필요한 공백 제거
+		- pageEncoding="UTF-8" : 한글 꺠짐 방지
+		
+- tag 지시자 : <%@ tag ... %>
+- include 지시자 : <%@ include file ... %>
+- attribute 지시자
+- variable 지시자
+	ex) <c:set var="num" value="값" />
+	
+- <%@ taglib prefix=".." tagdir="경로" />
+
+2) 한글을 포함하는 태그 파일
+3) 애트리뷰트를 지원하는 태그 파일
+	- 속성을 정의
+	<%@ attribute name="속성명" ... type="속성의 자료형" %>
+	- 속성명으로된 자바 변수, EL 식 변수
+	- type : 기본값 java.lang.String / 따로 명시하지 않으면 전부 문자열 인식
+				 : 기본 자료형(int, long ...) 설정 불가, 기본 자료형은 기본형의 래퍼 클래스 형태로 설정
+						ex) int -> java.lang.Integer
+						
+	- required : false - 기본값
+							 true - 필수 속성
+	
+4) 태그 파일의 내장 객체
+	HttpServletRequest request ⭐
+	HttpServletResponse response
+	JspWriter out
+	ServletContext application ⭐
+	HttpSession session ⭐
+	ServletConfig config
+	JspContext jspContext ⭐
+
+5) 동적 애트리뷰트를 지원하는 태그 파일
+- <%@tag dynamic-attributes="attrs" %>
+- 설정한 속성이 전부 map 형태로 추가
+	attrs.속성명 바로 접근
+- 자료형은 전부 문자열로 인식
+- 필수 여부 설정 불가
+- jspContext Map<String, String> 형태로 조회
+
+참고)
+	태그 속성으로 추가되는 EL식 변수 : 페이지 범위(pageContext)
+
+6) 커스텀 액션의 본체를 처리하는 태그 파일
+	body-content
+							: scriptless - 자바코드 X / EL식, 다른 태그, 액션 태그 O
+							: tagdependent - 무조건 텍스트로만 인식
+							
+							<jsp:doBody /> ⭐⭐
+
+3. 변수를 지원하는 커스텀 액션
+<%@ variable name-given="EL식 속성명" variable-class="속성의 자료형" scope="EL식 속성명을 접근할 수 있는 위치" %>
+scope
+	- AT_END : 태그가 끝난 후 태그 외부에서 접근 가능
+	- AT_BEGIN : 본체가 있는 태그 : scriptless -> 여는 태그 바로 아래 
+	- NESTED : 본체 안에서 사용 가능
+	
+- name-from-attribute : 속성으로 지정된 값을 EL식 변수로 설정
+- alias='...'
+
+- 속성
+	rtexprvalue : true(기본값) - EL식 변수, 자바 코드를 속성 값으로 사용 가능
+							: false - 지정한 타입의 기본형 자료만 가능(문자열)
+	
+4) 커스텀 액션의 본체 안에서 변수를 사용하는 예
+
+4. 커스텀 액션 태그를 이용하여 레이아웃 구성하기

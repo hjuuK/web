@@ -1,0 +1,407 @@
+배열
+배열의 기초
+- 배열 객체 : 배열 X, 배열의 기능을 유사하게 구현한 객체
+
+1. 배열 리터럴로 생성하기
+	new Array(매개변수)
+		매개변수 : 숫자 - 갯수 1개 : 배열 객체의 공간 갯수 (음수는 사용X)
+							 - 갯수 2개 이상 : 배열의 요소
+							 
+		[[Prototype]] : Array.prototype
+	const 변수명 = [...];
+	
+	배열의 값으로 사용 가능한 자료형 : 전부 다 (원시타입 + 객체)
+	
+	속성명이 순서 번호
+		- 숫자는 마침표 연산자로 접근 X -> [숫자]
+		
+	배열명[숫자]
+		
+2. length 프로퍼티
+3. Array 생성자로 생성하기
+
+	배열 객체는?
+		1) 속성명이 순서 번호
+		2) length 속성
+		3) 프로토타입 체인 -> Array.prototype
+		
+		만약에 1,2만 충족된 형태 : 유사 배열 객체
+
+4. 배열 요소의 참조
+5. 배열은 객체
+6. 배열 요소의 추가와 삭제
+	- 객체와 같이 추가, 삭제 하면 배열처럼 동작 X
+	
+	추가)
+	Array.prototype 메서드
+		push(...items) : 끝에 추가
+		-------------------------------------------------------
+		const fruits = ["apple", "orange"];
+		fruits.push("melon", "banana");
+		< 4
+		fruits;
+		< (4) ['apple', 'orange', 'melon', 'banana']
+		-------------------------------------------------------
+		
+		unshift(...items) : 맨 앞에 추가
+		-------------------------------------------------------
+		fruits.unshift("mango");
+		< 5
+		fruits;
+		< (5) ['mango', 'apple', 'orange', 'melon', 'banana']
+		-------------------------------------------------------
+		
+	삭제)
+		pop() : 끝에서 꺼내기(반환값이 꺼낸 요소)
+		-------------------------------------------------------
+		const fruits = ["apple", "orange", "mango", "melon"];
+		fruits.pop();
+		< 'melon'
+		fruits;
+		< (3) ['apple', 'orange', 'mango']
+		-------------------------------------------------------
+
+		shift() : 앞에서 꺼내기(반환값이 꺼낸 요소)
+		-------------------------------------------------------
+		fruits.shift();
+		< 'apple'
+		fruits;
+		< (2) ['orange', 'mango']	
+		-------------------------------------------------------
+		
+	중간 추가, 삭제, 변경
+		splice // 반환값은 삭제한 요소
+		-------------------------------------------------------
+		//삭제
+		const fruits = ["apple", "orange", "mango", "melon"];
+		fruits.splice(1, 2); // 1번째부터 2개 삭제
+		< (2) ['orange', 'mango']
+		fruits;
+		< (2) ['apple', 'melon']
+		
+		//추가
+		const fruits = ["apple", "orange", "mango", "melon"];
+		fruits.splice(1,0,"banana");
+		< []
+		fruits;
+		< (5) ['apple', 'banana', 'orange', 'mango', 'melon']
+
+		//삭제 + 추가 = 변경
+		const fruits = ["apple", "orange", "mango", "melon"];
+		fruits.splice(1,2, "banana", "watermelon");
+		< (2) ['orange', 'mango']
+		fruits;
+		< (4) ['apple', 'banana', 'watermelon', 'melon']
+		-------------------------------------------------------
+		
+7. 배열 요소가 있는 확인하기
+		indexOf
+		lastIndexOf
+		
+		없으면 -1
+		
+		-------------------------------------------------------
+		const fruits = ["apple", "orange", "mango", "melon", "apple"];
+		if (fruits.indexOf("apple") != -1) {
+				console.log("있음!");
+		}	
+		< 있음!
+		fruits.lastIndexOf("apple");
+		< 4
+		-------------------------------------------------------
+		
+배열의 메서드
+1. Array.prototype의 메서드 목록
+		concat(...) : 반환값이 새로운 배열 객체
+		slice(...) : 반환값이 새로운 배열 객체
+
+	얕은 복사(shallow copy) : 주소만 복사		=> push, pop
+	깊은 복사(deep copy) : 새로운 객체 + 복사		=> concat, slice
+	
+	
+	참고)
+		자바스크립트 코딩 가이드라인 : Airbnb JavaScript 스타일 가이드
+			- 배열 복사 : slice 권장
+			- 배열 추가 : concat
+			
+				... : 전개 연산자(spread operator)
+								1) 깊은 복사
+								2) 배열 -> 일반 변수
+								3) 객체
+				-------------------------------------------------------
+				const fruits = ["apple", "orange", "mango"];
+				const fruits2 = [...fruits]; // 전개 연산자
+				fruits2;
+				< (3) ['apple', 'orange', 'mango']
+				fruits2[0] = "melon";
+				< 'melon'
+				fruits2;
+				< (3) ['melon', 'orange', 'mango']
+				fruits;
+				< (3) ['apple', 'orange', 'mango']
+				-------------------------------------------------------
+				function add(num1, num2) {
+					return num1 + num2;
+				}
+				const nums = [10,20];
+				add(...nums);		// 전개 연산자
+				< 30
+				-------------------------------------------------------
+				// 객체
+				const person = { name : "이이름", age : 40 };
+				const person2 = { ...person };
+				person2;
+				< {name: '이이름', age: 40}
+				person2.name = "김이름";	
+				< '김이름'
+				person2;
+				< {name: '김이름', age: 40}
+				person;
+				< {name: '이이름', age: 40}
+				-------------------------------------------------------
+				const person2 = { ...person, age : 30 }; // 기존거는 복사하고 age만 수정
+				person2;
+				< {name: '이이름', age: 30}
+				-------------------------------------------------------
+
+
+다차원 배열
+-------------------------------------------------------
+const nums = [[0,1,2,3,4], [5,6,7,8,9]]; //2차원 배열
+
+nums;
+< (2) [Array(5), Array(5)]0: (5) [0, 1, 2, 3, 4]1: (5) [5, 6, 7, 8, 9]length: 2[[Prototype]]: Array(0)
+
+for (let i = 0; i < nums.length; i++){
+    for (let j = 0; j < nums[i].length; j++) {
+        console.log(i, "행 ", j, "열 = ", nums[i][j]);
+    }
+}
+< 0 '행 ' 0 '열 = ' 0
+< 0 '행 ' 1 '열 = ' 1
+< 0 '행 ' 2 '열 = ' 2
+< 0 '행 ' 3 '열 = ' 3
+< 0 '행 ' 4 '열 = ' 4
+< 1 '행 ' 0 '열 = ' 5
+< 1 '행 ' 1 '열 = ' 6
+< 1 '행 ' 2 '열 = ' 7
+< 1 '행 ' 3 '열 = ' 8
+< 1 '행 ' 4 '열 = ' 9
+-------------------------------------------------------
+
+유사배열
+	배열 객체는?
+		1) 속성명이 순서 번호
+		2) length 속성
+		3) 프로토타입 체인 -> Array.prototype
+		
+		만약에 1,2만 충족된 형태 : 유사 배열 객체
+
+
+
+참고)
+	ES6 : 물리적 배열
+				Int8Array
+				Int16Array ..
+				
+				HTML5
+					WebRTC
+					FileAPI
+					WebGL
+					
+ECMAScript6+에 추가된 기능
+이터레이터
+Symbol.interator  => 반복적 패턴 // @@ = Symbol 	// iterator가 정의되어 있으면 for ... of 구문으로 반복 가능
+	.next()
+	-------------------------------------------------------
+	const fruits = ["apple", "orange", "mango", "melon", "apple"];
+	const itr = fruits[Symbol.iterator]();
+	itr.next();
+	< {value: 'apple', done: false}
+	itr.next();
+	< {value: 'orange', done: false}
+	itr.next();
+	< {value: 'mango', done: false}
+	itr.next();
+	< {value: 'melon', done: false}
+	itr.next();
+	< {value: 'apple', done: false}
+	itr.next();
+	< {value: undefined, done: true}
+	-------------------------------------------------------
+
+	for ... of 구문 : 이터레이터가 정의된 경우 사용 가능
+	-------------------------------------------------------
+	const fruits = ["apple", "orange", "mango", "melon", "apple"];
+	const itr = fruits[Symbol.iterator]();
+	while(true) {
+			const data = itr.next();
+			if(data.done) { // 끝에 도달한 경우
+					break;
+			}
+			const value = data.value;
+			console.log(value);
+	}
+	< apple
+	< orange
+	< mango
+	< melon
+	< apple
+	-------------------------------------------------------
+		
+	for ... of 구문 : 이터레이터가 정의된 경우 사용 가능
+	-------------------------------------------------------
+	const fruits = ["apple", "orange", "mango", "melon", "apple"];
+	for (const fruit of fruits) { // Symbol.iterator가 구현되어 있는 경우 사용 가능
+    console.log(fruit);
+	}
+	< apple
+	< orange
+	< mango
+	< melon
+	< apple
+	-------------------------------------------------------
+	
+	const fruits = {
+    0: "apple",
+    1: "melon",
+    2: "mango",
+    length: 3,
+    [Symbol.iterator] : function() {
+        let cursor = 0;
+        return {
+            next() {
+                const value = fruits[cursor];
+                const done = value ? false : true;
+                cursor++;
+                return { value : value, done : done };
+            }
+        }
+    }
+	}
+	const itr = fruits[Symbol.iterator]();
+	itr.next();
+	< {value: 'apple', done: false}
+	itr.next();
+	< {value: 'melon', done: false}
+	itr.next();
+	< {value: 'mango', done: false}
+	-------------------------------------------------------
+	const fruits = {
+    0: "apple",
+    1: "melon",
+    2: "mango",
+    length: 3,
+    [Symbol.iterator] : function() {
+        let cursor = 0;
+        return {
+            next() {
+                const value = fruits[cursor];
+                const done = value ? false : true;
+                cursor++;
+                return { value : value, done : done };
+            }
+        }
+    }
+	}
+	for (const fruit of fruits) {		// for .. of 구문
+    console.log(fruit);
+	}
+	< apple
+	< melon
+	< mango
+	-------------------------------------------------------
+
+
+비구조화 할당
+
+1. 배열의 비구조화 할당
+
+1) 기본적인 사용법
+2) 이미 선언된 변수를 비구조화 할당하는 예
+3) 나머지 요소
+4) 요소의 기본값
+
+-------------------------------------------------------
+const fruits = ["apple", "orange", "mango", "melon"];
+const [a, b, c, d] = fruits;
+a;		
+< 'apple'
+b;		
+< 'orange'
+c;		
+< 'mango'
+d;
+< 'melon'
+-------------------------------------------------------
+const person = { name : "이이름", age : 40 };
+for (const data of Object.entries(person)) {
+    const [key, value] = data; // 비구조화 할당
+    console.log(key, value);
+}
+< name 이이름
+< age 40
+
+=> 더 간단하게 하기 위한 비구조화 할당 (효율적)
+for (const [key, value] of Object.entries(person)) {
+    console.log(key, value);
+}
+-------------------------------------------------------
+
+let a = 1;
+let b = 2;
+let [b, a] = [a, b];
+a;		
+< 2
+b;		
+< 1
+-------------------------------------------------------
+
+2. 객체의 비구조화 할당
+1) 기본적인 사용법
+
+-------------------------------------------------------
+const person = { name : "이이름", age : 40 };
+const { name : _name, age : _age } = person;  // 속성명 : 변수명
+_name;		
+< '이이름'
+_age;
+< 40
+-------------------------------------------------------
+=> 속성명과 변수명이 동일하면 한번만 써도 가능
+const { name, age } = person; // const { name : name, age : age };
+-------------------------------------------------------
+
+2) 프로퍼티의 기본값
+3) 프로퍼티 이름 생략하기
+4) 반복 가능한 객체의 비구조화 할당
+5) 중첩된 자료 구조의 비구조화 할당
+
+3. 전개 연산자
+	깊은 복사
+
+4. Map
+5. Set
+
+
+Array.prototype.every()
+const nums = [0,1,3,5,7,9];
+nums.every(x => x % 2 == 1); 	=> 모든 요소가 참일때만 true
+< false	
+
+Array.prototype.some()
+nums.some(x => x % 2 == 0); 	=> 한개만 참이어도 true		
+< true
+
+const fruits = ["Apple", "Orange", "Melon", "Mango"];
+fruits.find(s => s.length == 5);		=> 길이가 5개인 첫번째거 출력
+< 'Apple' 
+fruits.findIndex(s => s.length == 5);		=> 길이가 5인 첫번째거의 인덱스 출력
+< 0
+fruits.filter(s => s.length == 5);	=> 길이가 5인 것만 출력
+< (3) ['Apple', 'Melon', 'Mango']
+
+const nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const nums2 = nums.map(x => x*x);
+nums2;
+< (10) [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]

@@ -1,0 +1,94 @@
+maven
+- 빌드, 의존성(필요한 라이브러리 jar(Java Archive))관리, 배포, 테스트 툴
+- xml
+참고) gradle
+	- groovy
+
+1. 설치
+C:\Users\khj02\OneDrive\바탕 화면\koreait JAVA\김혜주\apache-maven-3.9.3\bin
+
+JAVA_HOME 환경 변수 없으면 X
+
+2. 사용
+1) 메이븐 프로젝트 생성
+mvn archetype:generate
+	groupId : 소속(도메인 방식)
+	artifactId : 프로젝트 구분명 ex) board, shopping ..
+	
+	
+<properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <maven.compiler.source>20</maven.compiler.source> : 자바 컴파일 버전
+  <maven.compiler.target>20</maven.compiler.target> : 배포 파일(jar) 컴파일 버전
+</properties>
+	
+<dependencies>
+  .. 자바 라이브러리 jar
+	
+	<scope> ..
+</dependencies>
+- 메이븐이 설치 : 중앙 소스 관리 방식(사용자/.m2)
+
+scope
+	- compiled : 기본값 / 배포 파일 (jar) : 포함
+	- runtime : 실행중에 로드되는 라이브러리
+	- provided : 개발중에만 필요한 라이브러리, 배포시(jar)에서는 제외
+	- test : 테스트시에만 필요한 라이브러리
+	
+
+2) 테스트
+	mvn test
+	
+3) 컴파일
+	mvn compile
+		-> 기존 컴파일 소스를 삭제하지 않고 컴파일 : 충돌 가능성 O
+		-> mvn clean / mvn compile
+		-> mvn clean compile : 기존 컴파일 소스 일괄 삭제 후 다시 컴파일
+	
+4) 컴파일된 소스 일괄 삭제 (target 폴더 삭제) 
+	mvn clean
+	
+5) 배포
+	mvn package
+		- target : ... .jar
+		
+		mvn clean package
+		
+		-> compile -> test -> package(jar)
+			: 테스트가 통과되지 않으면 배포 파일이 생성 X
+
+
+lombok
+	-> getter, setter, ToString
+		: 데이터 용도의 클래스에 편의 코드 생성
+	
+	- @Getter
+	- @Setter
+	- @ToString
+		- 참고) JPA : 연관관계 매핑 - 순환참조 오류
+		- getter 메서드를 통해서 값을 출력
+		- ToString.Exclude : 출력 제외
+	- @EqualsAndHashCode
+	- @Data : @Getter, @Setter, @ToString, @EqualsAndHashCode
+	
+	- @NoArgsConstructor : 기본 생성자
+	- @AllArgsConstructor : 모든 멤버 변수 초기화 매개변수
+	- @RequiredArgsConstructor : 반드시 초기화가 필요한 멤버 변수를 생성자 매개변수로 추가
+		- 멤버 변수가 상수인데 초기화가 안된 경우
+			(final)
+		- @NonNull
+		
+	@Builder : 빌더 패턴
+	
+	
+		참고) 빌더 패턴
+			- 객체를 생성하지 않고, 내부의 빌더를 통해서 객체 생성, 값의 초기화
+			- 기본 생성자가 private
+			- 정적 내부 클래스 Builder Class
+			
+	
+		
+	1.18.28
+	1 - 메이저 버전 : 주요한 변화 -> 호환성 문제 O
+	18 - 마이너 버전 : 기능 추가, 주요한 변화, 호환성 문제 X
+	28 - 패치 버전 : 오류 수정, 기능 개선, 호환성 문제 X

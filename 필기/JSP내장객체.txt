@@ -1,0 +1,49 @@
+JSP 내장객체
+1. request
+2. response
+3. out
+4. session
+5. application
+6. pageContext
+7. page
+8. config
+9. exception
+
+속성 처리 객체와 메서드의 종류
+pageContext, request, session, application
+
+1. setAttribute(String name, Object value)
+2. getAttribute(String name)
+3. removeAttribute(String name)
+4. getAttributeNames()
+
+
+----------------------------------------------
+
+JSP 내장객체
+
+HttpServletRequest request
+HttpServletResponse reponse
+HttpSession session
+ServletContext application
+ServletConfig config
+Object page = this
+JspWriter out
+PageContext pageContext
+Throwable exception : <%@ page isErrorPage="true" %>
+
+
+속성을 관리하는 내장 객체 4가지
+PageContext pageContext
+HttpServletRequest request
+HttpSession session
+ServletContext application
+
+	속성 설정
+	void setAttribute(String name, Object value);
+	
+	속성 조회
+	Object getAttribute(String name);
+	
+	속성 제거
+	void removeAttribute(String name);

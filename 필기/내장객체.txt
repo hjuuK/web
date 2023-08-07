@@ -1,0 +1,395 @@
+내장 객체
+- 네이티브 객체 (ECMAscript Core)
+
+1. 내장 생성자
+	- Object
+		- 모든 객체는 Object.prototype을 상속 / Object 생성자로 만들어진 객체
+		- new Object(); -> {} 이렇게 생략 가능
+		- 객체와 관련된 핵심적인 메서드, 속성 정의
+		- 모든 속성
+			- value
+			- configurable : 설정 가능 여부
+				- false : 설정 변경 불가 / 다만 writable: true -> writable: false 변경 한번 가능
+					- 삭제불가
+					const person = {
+						name : "이이름",
+						age : 40,
+						showInfo() {
+							console.log(this.name, this.age);
+						}
+					};
+						Object.defineProperty(person, 'age', {configurable: false});
+						// 삭제불가
+						
+			- writable : 쓰기 가능여부(쓰기, 수정)
+			- enumerable : 열거 가능 여부
+			
+			- set : setter 설정
+			- get : getter 설정
+		
+		- 속성의 설정 상태 확인
+			- Object.getOwnPropertyDescriptor()
+			- Object.getOwnPropertyDescriptors()
+			
+		- 속성의 설정 변경
+			- Object.defineProperties()
+			- Object.defineProperty()
+			
+		Object.create : 상세하게 객체 생성 정의
+		
+		Object.freeze(...) : 객체동결
+			- 속성 수정, 삭제, 추가 불가
+			
+		Object.seal(...) : 객체 밀봉
+			- 삭제 불가, 추가 불가, 수정은 가능
+			
+		
+		Object.prototype.hasOwnProperty() - 객체가 소유한 속성 중에서 특정 속성이 포함되어있는지 체크하는 메서드 (내꺼만 체크)
+		
+		참고) '속성명' in 객체 : 객체에 있는 모든 속성(+상속 포함)'속성명' 포함되어 있는지 체크 (전체 체크)
+
+	
+		Object.isExtensible() : 속성추가 가능하지 여부
+		
+		Object.preventExtensions() : 속성 추가 방지 / 동결, 밀봉 상태에서 추가를 못하게 막는 것은 이 메서드를 활용
+		
+		Object.keys() : 속성명을 배열 객체로 반환 const keys = Object.keys(person);
+		
+		Obejct.values() : 속성값을 배열 객체로 반환 const values = Object.values(person);
+		
+		
+	- String
+		let str = "ABC"; // 원시타입
+		str = str.toLowerCase(); -> new 
+		String(str).toLowerCase() -> str
+		
+		split(...) : 특정 문자열로 잘라서 -> 배열 객체
+							참고) 배열에서 특정문자열로 결합 -> 문자열 
+									join(...);
+			-------------------------------------------
+			let userId = "user01";
+			const len = uwerId.length;
+			userId = userId.substring(0,2).padEnd(len,"*");
+			-------------------------------------------
+		
+		참고)
+			Number, String -> Wrapper 생성자 객체
+			
+		참고)
+			태그함수 : 템플릿 리터럴에서 적용 가능
+				(전개 연산자(가변 매개변수) ...)
+				
+				
+		Number
+				- 다른 타입의 자료 -> 숫자로 변환
+				
+			NaN(Not a Number)
+			
+			isNaN(값) : 숫자가 아니면 ture(NaN) / false이면 숫자
+			---------------------------------------------
+			const num1 = "abc";
+			isNaN(num1);
+			< true
+			if (isNaN(num1)) {
+			console.log("숫자가 아니다!");
+			} else {
+			console.log("숫자 입니다.");
+			}
+			< 숫자 입니다.
+			---------------------------------------------			
+			const num1 = "1234";
+			typeof num1;
+			< 'string'
+			isNaN(num1);
+			< false
+				
+				=> 참고) 문자로된 숫자 -> false로 인식
+							판별 기준이 Number 생성자로 값을 넣어서 호출했을때 NaN이 나오면 true
+							
+							"1234" -> Number("1234") -> false
+							
+			paseInt(...) : 정수로 변환		
+			---------------------------------------------			
+			const num1 = "100";
+			const num2 = 100;
+			parseInt(num1) + num2;
+			< 200
+			parseInt(10.123);	
+			< 10
+			---------------------------------------------			
+			
+			parseFloat(...) : 실수로 변환
+			---------------------------------------------			
+			const num3 = "100.123";
+			parseFloat(num3);
+			< 100.123
+			---------------------------------------------		
+
+			toFixed(x) : 소수점 x자리까지 잘라냄
+			---------------------------------------------	
+			const num1 = 10.123456;
+			num1.toFixed(2);
+			< '10.12'
+			
+		Boolean()
+				- false 또는 true로 인식될 수 있는 값을 실제 논리값으로 변환(true, false)
+				
+				- false : 0, '', null, undefined
+				- true : false로 인식하는 값을 제외한 모든 값
+				---------------------------------------------	
+				const result = Boolean(0);
+				result;
+				< false
+				const result1 = Boolean(1);
+				result1
+				< true
+				const result2 = Boolean('');
+				result2;
+				< false
+				Boolean('     ');
+				< true
+				---------------------------------------------	
+		
+		Arrays
+		...
+
+2. 내장 객체
+
+7/17 수업 내용
+
+에러 객체
+try {
+
+	throw new Error("에러메시지");
+
+} catch (e) {
+
+}
+
+
+Date 생성자 객체 : 날짜/시간
+
+--------------------------------------------------
+
+const date = new Date();
+date.setDate(date.getDate()-7); // 7일 전
+< 1688552772927
+date;
+< Wed Jul 05 2023 19:26:12 GMT+0900 (한국 표준시)
+date.toLocaleString();
+< '2023. 7. 5. 오후 7:26:12'
+date.setDate(date.getDate()+7); // 7일 후
+< 1689157572927
+date.toLocaleString();
+< '2023. 7. 12. 오후 7:26:12'
+
+-------------------------------------------------
+
+const date = new Date();
+date.setMonth(date.getMonth()-30); // 30개월 전
+< 1610447320557
+date.toLocaleString();
+< '2021. 1. 12. 오후 7:28:40'
+
+--------------------------------------------------
+
+
+내장 객체
+	Math
+		abs() : 절대값
+		sign() : 부호(음수 -1, 양수 1, 0)
+		sqrt()
+		pow(..) : Math.pow(2,3) : 2의 3승 = 8
+		
+		round() : 반올림
+		floor() : 버림
+		ceil() : 올림
+		
+		random() : 0~1 사이의 난수
+		
+	JSON - (JavaScript Object Notation - 자바스크립트 객체 표기법)
+			 - 자바스크립트 표기법으로 표현된 문자열
+			 - 다른 플랫폼과 통신하기 위한 공통 형식
+			 
+			 - stringify(자바스크립트 객체) : 자바스크립트 객체 -> JSON 문자열로 변환 (직렬화)
+			 - parse("JSON 문자열") : JSON 문자열 -> 자바스크립트 객체
+			 
+			 
+			 
+-------------------------------------------------- 카카오톡 응답 (https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
+// JSON 문자열 -> 자바스크립트 객체 변환 => parsd("JSON 문자열")
+
+const json = `{
+    "token_type":"bearer",
+    "access_token":"ACCESS_TOKEN",
+    "expires_in":43199,
+    "refresh_token":"REFRESH_TOKEN",
+    "refresh_token_expires_in":5184000,
+    "scope":"account_email profile"
+}`;
+const obj = JSON.parse(json); // 변환
+obj;
+< {token_type: 'bearer', access_token: 'ACCESS_TOKEN', expires_in: 43199, refresh_token: 'REFRESH_TOKEN', refresh_token_expires_in: 5184000, …}
+access_token
+: 
+"ACCESS_TOKEN"
+expires_in
+: 
+43199
+refresh_token
+: 
+"REFRESH_TOKEN"
+refresh_token_expires_in
+: 
+5184000
+scope
+: 
+"account_email profile"
+token_type
+: 
+"bearer"
+[[Prototype]]
+: 
+Object
+obj.token_type;
+< 'bearer'
+
+-------------------------------------------------- 자바스크립트 객체 -> JSON 문자열로 변환 => stringify(자바스크립트 객체)
+	
+const obj = { a:1, b:2, c:3};
+typeof obj;
+< 'object'
+const json = JSON.stringify(obj); // 변환
+json;
+< '{"a":1,"b":2,"c":3}'
+typeof json;
+< 'string'
+
+--------------------------------------------------
+
+
+비구조화 할당
+
+1. 배열의 비구조화 할당
+
+1) 기본적인 사용법
+	- 배열의 값을 변수 각각으로 분해 할당
+	
+2) 이미 선언된 변수를 비구조화 할당하는 예
+3) 나머지 요소
+4) 요소의 기본값
+
+2. 객체의 비구조화 할당
+1) 기본적인 사용법
+const person = {
+    name : "이이름",
+    age : 40
+};
+
+-----------------------------------------
+const {name, age} = person; // const { name:name, age:age } = person;
+name;
+< '이이름'
+age;
+< 40
+-----------------------------------------
+
+2) 프로퍼티의 기본값
+const person = {
+    name : "이이름",
+    age : 40
+};
+
+-----------------------------------------
+const { name, age, address : address = "주소" } = person;
+name;
+< '이이름'
+age;
+< 40
+address;
+< '주소'
+-----------------------------------------
+
+3) 프로퍼티 이름 생략하기
+
+4) 반복 가능한 객체의 비구조화 할당
+	- Iterator
+	- Generator
+	
+		function* 함수명() {
+			yield 값;
+			yield 값;
+			...
+		}
+		
+5) 중첩된 자료 구조의 비구조화 할당
+
+3. 전개 연산자
+... : 전개 연산자(Spread Operator)
+	- 객체의 깊은 복사
+		: 나머지 연산자
+		
+	
+----------------------------------------- 전개 연산자
+	
+const person = {
+    name : "이이름",
+    age : 40
+};
+const person2 = { ...person };
+person2;
+< {name: '이이름', age: 40}
+person2 === person;
+< false
+person2.name = "김이름";
+< '김이름'
+person;
+< {name: '이이름', age: 40}
+person2;
+< {name: '김이름', age: 40}
+
+-----------------------------------------
+
+const person2 = { ...person, name : "김이름" }; // 객체 복사와 동시에 name 값 변경
+person;
+< {name: '이이름', age: 40}
+person2;
+< {name: '김이름', age: 40}
+
+-----------------------------------------
+
+const fruits = ["Apple", "Orange", "Melon", "Mango"];
+const fruits2 = [...fruits];
+fruits;
+< (4) ['Apple', 'Orange', 'Melon', 'Mango']
+fruits2;
+< (4) ['Apple', 'Orange', 'Melon', 'Mango']
+fruits === fruits2;
+< false
+
+-----------------------------------------
+
+
+	: 나머지 연산자
+	
+----------------------------------------- 나머지 연산자
+	
+const fruits = ["Apple", "Orange", "Melon", "Mango"];
+const [a, b, ...c] = fruits;
+a
+< 'Apple'
+b
+< 'Orange'
+c;
+< (2) ['Melon', 'Mango']
+
+-----------------------------------------
+
+function add(num1, num2) {
+    return num1 + num2;
+}
+const nums = [10,20]; 
+add(...nums); // add(nums[0], nums[1]);
+< 30
+
+-----------------------------------------

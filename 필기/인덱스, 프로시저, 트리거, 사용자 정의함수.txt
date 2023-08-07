@@ -1,0 +1,237 @@
+인덱스
+- 인덱스(index - 색인)란 자료를 쉽고 빠르게 찾을 수 있도록 만든 데이터 구조
+
+	목차 : 데이터의 물리적 주소가 기록 + 정렬
+	
+1. 인덱스의 특징 정리
+- 인덱스는 테이블에서 한 개 이상의 속성을 이용하여 생성한다.
+- 빠른 검색과 함께 효율적인 레코드 접근이 가능하다.
+- 순서대로 정렬된 속성과 데이터의 위치만 보유하므로 테이블보다 작은 공간을 차지한다.
+- 저장된 값들은 테이블의 부분집합이 된다.
+- 일반적으로 B-tree 형태의 구조를 가진다.
+- 데이터의 추가, 수정, 삭제 등의 변경이 발생하면 인덱스의 재구성이 필요하다.
+
+
+2. MySQL 인덱스의 종류
+1) 클러스터 인덱스
+	- 검색의 기준
+	- 기본키
+	- UNIQUE 제약조건이 걸려있는 키
+	- 둘다 없는 경우 MySQL이 내부적으로 클러스터 인덱스를 생성
+	
+2) 보조인덱스
+	보조 인덱스 -> 레코드 -> 클러스터 인덱스
+
+3. 인덱스의 생성
+	DDL - 
+	
+	CREATE [UNIQUE] INDEX 인덱스명 ON 테이블명 ( 컬럼명 [ASC - 기본값|DESC], ... );
+	
+	SHOW INDEX FROM 테이블명;
+
+	//Book 테이블의 bookname 열을 대상으로 인덱스 ix_Book을 생성하시오
+	//CREATE INDEX ix_Book ON Book(bookname);
+	
+	//Book 테이블의 publisher, price 열을 대상으로 인덱스 ix_Book2를 생성하시오.
+	//CREATE INDEX ix_Book2 ON Book(publisher, price);
+	
+4. 인덱스 재구성과 삭제
+	ANALYZE TABLE 테이블명;		-- 인덱스 재구성
+	//ANALYZE TABLE Book;
+	
+	DROP INDEX 인덱스명 ON 테이블;
+	
+	
+	
+프로시저 - 저장프로그램
+
+CREATE PROCEDURE 함수명([IN|OUT] 매개변수 ...)		// 내부 조회 변수 : IN(기본값) | 외부 조회 변수 : OUT
+BEGIN
+	// 수행 코드 정의
+
+END;
+
+CALL 프로시저명(값);
+
+-------------------------------------------
+delimiter ##
+CREATE PROCEDURE dorepeat(p1 INT)
+BEGIN
+	SET @x = 0;
+    REPEAT SET @x = @x + 1; UNTIL @x > p1 END REPEAT;
+END;
+##
+delimiter ;
+-------------------------------------------
+CALL dorepeat(1000);
+
+SELECT @x;
+-------------------------------------------
+
+
+1. 삽입 작업을 하는 프로시저
+-------------------------------------------
+delimiter ##
+CREATE PROCEDURE InsertBook(
+	myBookId INT,
+    myBookName VARCHAR(40),
+    myPublisher VARCHAR(40),
+    myPrice INT
+)
+BEGIN
+	INSERT INTO Book VALUES (myBookId, myBookName, myPublisher, myPrice);
+END;
+##
+delimiter ;
+-------------------------------------------
+CALL InsertBook(23, "책1", "출판사1", 10000);
+-------------------------------------------
+
+//동일한 도서가 있는지 점검한 후 삽입하는 프로시저
+-------------------------------------------
+// 있으면 수정, 없으면 추가
+delimiter ##
+CREATE PROCEDURE BookInsertOrUpdate(
+	myBookId INT,
+    myBookName VARCHAR(40),
+    myPublisher VARCHAR(40),
+    myPrice INT
+)
+BEGIN
+	DECLARE cnt INT; -- cnt라고하는 지역변수 생성
+    SELECT COUNT(*) INTO cnt FROM Book WHERE bookid=myBookId; -- 결과값이 cnt에 담김 
+    IF cnt > 0 THEN 
+		UPDATE Book
+			SET
+				bookname=myBookName,
+                publisher=myPublisher,
+                price=myPrice
+			WHERE bookid=myBookId;
+	ELSE
+		INSERT INTO Book VALUES (myBookId, myBookName, myPublisher, myPrice);
+	END IF;
+END;
+##
+delimiter ;
+-------------------------------------------
+
+2. 제어문을 사용하는 프로시저
+
+3. 결과를 반환하는 프로시저
+//Book 테이블에 저장된 도서의 평균가격을 반환하는 프로시저
+-------------------------------------------
+delimiter ##
+CREATE PROCEDURE AveragePrice(
+	OUT avgVal INT
+)
+BEGIN
+	SELECT AVG(price) INTO avgVal FROM Book;
+END;
+##
+delimiter ;
+-------------------------------------------
+// 실행
+CALL AveragePrice(@val);
+
+SELECT @val;
+-------------------------------------------
+
+4. 커서를 사용하는 프로시저
+// 주문 금액 3만원 이상 -> 수익률 10%
+					3만원 미만 -> 수익률 5%
+-------------------------------------------
+delimiter ##
+CREATE PROCEDURE Interest()
+BEGIN
+	DECLARE myInterest INT DEFAULT 0;
+    DECLARE price INT;
+    DECLARE endOfRow BOOLEAN DEFAULT FALSE;
+    DECLARE InterestCursor CURSOR FOR 
+		SELECT saleprice FROM Orders;
+	DECLARE CONTINUE handler
+		FOR NOT FOUND SET endOfRow = TRUE;
+        
+	OPEN InterestCursor;
+	cursor_loop : LOOP
+		FETCH InterestCursor INTO price;
+        IF endOfRow THEN LEAVE cursor_loop;
+        END IF;
+        
+        IF price >= 30000 THEN
+			SET myInterest = myInterest + price * 0.1;
+		ELSE
+			SET myInterest = myInterest + price * 0.05;
+		END IF;
+    END LOOP cursor_loop;
+    CLOSE InterestCursor;
+    SELECT CONCAT(" 이익 금액 : ", myInterest);
+END;
+##
+delimiter ;
+-------------------------------------------
+CALL Interest();
+--
+	CONCAT(" 이익 금액 : ", myInterest)
+						이익 금액 : 5900
+-------------------------------------------
+
+
+
+트리거
+	- 추가, 수정, 삭제 -> 발생하는 이벤트 정의
+	
+	AFTER INSERT|DELETE|UPDATE
+	
+	BEFORE INSERT|DELETE|UPDATE
+	
+	INSTEAD OF INSERT
+	
+	CREATE TRIGGER 트리거명
+		AFTER UPDATE 
+		
+		
+	내장 객체
+	new : INSERT 쿼리 시 -> 새로 추가된 데이터
+	old : UPDATE, DELETE 쿼리 시 -> 기존 데이터 (백업)
+	
+-------------------------------------------
+CREATE TABLE Book_log AS SELECT * FROM Book WHERE 1 <> 1; -- 값이 아닌 구조만 복사
+-------------------------------------------
+delimiter ##
+CREATE TRIGGER AfterUpdateBook
+	AFTER UPDATE ON Book FOR EACH ROW
+BEGIN
+	INSERT INTO Book_log
+		VALUES (old.bookid, old.bookname, old.publisher, old.price);
+END;
+##
+delimiter ;
+-------------------------------------------
+CALL BookInsertOrUpdate(24, "책5", "출판사5", 30000);		-- Book에서 24번 값 변경
+-------------------------------------------
+SELECT * FROM madang.book_log; 	
+-- 	bookid	bookname	publisher	price		// 변경 전 24번의 값들이 백업되어 있음
+			24			책3				출판사3		30000
+-------------------------------------------
+
+
+
+사용자 정의함수
+
+CREATE FUNCTION 함수명 (매개변수) RETURNS 반환자료형
+
+-------------------------------------------
+delimiter ##
+CREATE FUNCTION UPPER2(Word VARCHAR(40)) RETURNS VARCHAR(40)
+BEGIN
+	DECLARE Converted VARCHAR(40);
+    
+    SET Converted = UPPER(Word);
+    
+    RETURN Converted;
+END;    
+##
+delimiter ;
+-------------------------------------------
+SELECT UPPER2('abc');		--ABC
+-------------------------------------------

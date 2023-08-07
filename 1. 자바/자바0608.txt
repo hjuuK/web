@@ -1,0 +1,166 @@
+2. Period와 Duration
+  - between()과 until()
+  - of(), with()
+  - 다른 단위로 변환 - toTotalMonths(), toDays(), toHours(), toMinutes()
+
+  Period : 날짜사이 간격(년, 월, 일) /
+  Duration : 시간 사이 간격(초, 나노초) /
+
+  - TemporalAmount 인터페이스 - 설계 틀
+
+3. 객체 생성하기 - now(), of()
+
+4. Temporal과 TemporalAmount
+
+5. TemporalUnit과 TemporalField
+
+참고)
+Temporal, TemporalAccessor, TemporalAdjuster
+- LocalDate, LocalTime, LocalDateTime, ZonedDateTime, OffsetDateTime, Instant 등
+
+- TemporalAccessor : 날짜, 시간 조회
+- TemporalAdjuster : 날짜 시간 조정
+
+TemporalAmount
+1) Period
+	- static Period between(...);
+
+2) Duration
+	- getSeconds()
+
+6. Instant
+  - EpodhTIme : Timestamp
+	- 1970.1.1 자정(UTC-0) / 1/1000 카운팅한 수치
+
+  - System.currenTimeMillis()
+
+ - Date, Calendar 클래스에서 변환 객체로 활용
+
+
+파싱과 포맷
+1. DateTimeFormatter
+   ofPattern("...") : 형식화할 날짜 시간 패턴
+    .format(TemporalAccessor ...) : 형식화
+
+2. 문자열을 날짜와 시간으로 파싱하기
+  핵심 클래스의 메서드
+	parse
+  
+  예) LocalDateTime
+	.parse()
+
+
+format(...) : 자바 객체 -> 형식화된 문자열
+parse(...) : 형식화된 문자열 -> 자바 객체
+
+
+java.time 패키지
+  LocalDate - 날짜
+	LocalDateTime atTime(LocalTime...)
+  LocalTime - 시간
+	LocalDateTime atDate(LocalDate...)
+
+  LocalDateTime - 날짜 시간
+		LocalDate + LocalTime
+  ZonedDate - 날짜/시간 + 시간대
+		LocalDateTime + ZonedId : Asia/Seoul
+
+		예) 서머타임제
+
+  OffsetDateTime - 날짜/시간 + 시간대
+		LocalDateTime + ZoneOffset : +9
+
+  Instant : EpochTime - 1970.1.1 자정(UTC+0) : 1/1000초 단위로 카운팅한 수치
+
+java.time.format 패키지 : 형식화
+  자바 객체 -> 형식화된 날짜 : DateTimeFormatter
+
+java.time.temporal 패키지
+  TemporalField - ChronoField : 날짜, 시간 필드
+  TemporalUnit - ChronoUnit : 날짜, 시간 단위 (DAYS)
+
+java.time.zone 패키지 : 시간대
+  ZonedId
+  ZoneOffset
+
+
+Temporal, TemporalAccesor - 조회, TemporalAdjustor - 변경
+- LocalDate, LocalTime, LocalDateTime, ZonedDateTime, OffsetDateTime, Instant
+
+TemporalAmount
+- Period : 날짜 사이의 기간
+- Duration : 초, 나노
+
+
+
+
+
+지네릭스
+1. 지네릭스란?
+ - 다양한 자료형을 사용하기위해서 Object
+  - 형변환의 번거로움
+  - 타입 안정성 문제(instanceof ...)  
+
+2. 지네릭 클래스의 선언
+
+public class Box { //지네릭 클래스
+    private Object item;
+
+    public void put(Object item) {
+        this.item = item;
+    }
+
+    public Object get() {
+        return item;
+    }
+}
+
+-> Box<Apple> ... 객체를 만드는 시점에 자료형 결정
+
+Box<Apple> appleBox = new Box<Apple>();
+
+
+3. 지네릭스의 용어
+  Box<T> : 지네릭 클래스
+  T : 타입 매개변수
+  Box : 원시타입
+  
+  T - Type
+  E - Element
+  K - Key
+  V - Value
+
+4. 지네릭스의 제한
+  <T extends A>
+     T : A 자료형, A클래스 하위 클래스
+  
+
+참고)
+  지네릭 타입을 사용하지 못하는 형태
+	- 타입이 객체 생성시에 결정
+	- 처음부터 타입이 명확하게 결정되어야 하는 형태는 사용 불가
+	- static 메서드 매개변수, static 변수 X
+	- 배열 -> new 자료형으로 공간을 계산해서 만들어주기 때문에 자료형 결정되지 않은 시점 적용 X
+
+  사용가능한 형태
+	- 인스턴스 변수
+	- 인스턴스 메서드
+
+
+지네릭 클래스의 객체 생성과 사용
+
+제한된 지네릭 클래스
+1. extends
+
+지네릭 메서드
+1. 와일드 카드
+  ? : ? extends Object
+
+	? extends A : A클래스, A 클래스의 하위 클래스 : 상한 제한
+	? super A : A클래스, A 클래스의 상위 클래스 : 하한 제한
+
+
+2. 지네릭 메서드
+
+
+지네릭 타입의 제거

@@ -1,0 +1,224 @@
+컬렉션 프레임워크
+컬렉션(Collection) : 데이터군 - 자료
+프레임워크(Framework) : 표준화된 설계
+
+자료구조
+Collection 인터페이스
+  1. List 인터페이스 : 순차 자료구조
+    - 순서가 있는 자료 , index
+      - 중복 자료 O
+    - ArrayList : 물리적 배열
+	- 조회속도가 빠르다
+	- 데이터 추가, 수정 삭제 불리
+      - LinkedList 
+	- 데이터 추가, 수정 삭제 유리
+	- 조회속도는 ArrayList보다는 불리
+	- Queue 구현클래스
+
+  2. Set 인터페이스 : 집합 자료구조
+      - 중복 허용 X
+       - equals(), hashcode()
+      - 순서 X
+    - HashSet
+    - TreeSet
+   
+3. Map 인터페이스 : 사전 자료구조
+
+------------------------------------------------------
+
+컬렉션 프레임워크 핵심 인터페이스
+Collection 인터페이스
+  1. List 인터페이스 : 순차 자료구조
+    1) 순서가 유지되는 자료 : 배열
+    2) 값은 중복이 가능
+      3) 구현 클래스
+	ArrayList
+	  - 배열을 구현한 클래스
+	  - 물리적 배열로 구성되어 있다.
+	  - 조회 속도가 빠르다.
+	   - 기본 배열 크기는 10개
+	   - 10개를 넘으면 기존 배열을 버리고 2배 크기의 새로운 배열을 생성
+	   - 쓰레드 안정성 X
+	  - 순서가 변경되는 변화 -> 새로운 배열 생성 -> 효율성 X
+	   - 추가, 수정, 삭제 -> 성능 저하 (보안=>LinkedList)
+
+	LinkedList
+	  - 요소간의 연결 순서가 결정
+	   - ArrayList 보다는 조회 속도는 불리
+	   - 요소의 추가, 수정, 삭제는 빠르다
+
+	Vector
+	  - 배열을 구현한 클래스
+	   - 물리적 배열로 구성되어 있다.
+	   - 쓰레드 안정성 O
+	  - 과거의 소스와 호환성 유지 차원
+
+	Stack
+	  push(E e) : 뒤에 추가
+	  E pop() : 뒤에서 꺼내기
+	
+	Queue
+	  offer(E e) : 앞에 추가
+	   poll() : 앞에서 꺼내기
+	...
+    
+    데이터 추가
+	add(...)
+	add(int index, E e)
+
+    데이터 조회
+	E get(int index) : 순서 번호로 조회
+	boolean contains(Object o) : 특정 요소가 존재 하면 true
+	int indexOf(Object o) : 특정 요소가 있는 위치 값 반환(0부터 시작)
+				- 없으면 -1 반환
+				- 왼쪽에서 오른쪽으로 이동하면서 찾음
+
+	int lastIndexOf(Object o) : 특정 요소가 있는 위치 값 반환
+				   - 없으면 -1 반환
+				   - 오른쪽에서 왼쪽으로 이동하면서 찾음
+	int size() : 요소의 갯수
+
+    데이터 삭제
+	E remove(int index) : 순서 번호로 요소 삭제
+	remove(Object o)
+
+     데이터 변경
+	E set(int index, E e)
+
+  2. Set 인터페이스 : 집합 자료구조
+    A - 1,2,3,4
+    B - 3,4,5,6
+    A와 B의 합집합 - 1,2,3,4,5,6
+
+      1) 중복 허용하지 않는다.
+      2) 순서 유지 X 
+    3) 구현 클래스
+	HashSet
+
+	TreeSet
+	   - HashSet + 정렬(SortedSet)
+
+	   - java.lang.Comparable : 정렬의 기준이 되는 인터페이스
+		: int compareTo
+
+	   - java.util.Comparator : Comparable의 compareTo의 대안적인 정렬 기준
+		int compare(T t1, T t2)
+
+	   참고)
+	      String
+		compareTo : 오름차순 정렬
+ 
+      A - 3,4,1,2
+      B - 3,4,5,6
+      A와 B의 합집합 - 1,2,3,4,5,6
+
+
+    데이터 추가
+	add(E e)
+
+      데이터 조회
+	boolean contains(Object o)
+
+	int size()
+
+      데이터 제거
+	boolean remove(Object o)
+
+
+
+3. Map 인터페이스 : 사전 자료구조
+  1) 키 - 값의 쌍 구조
+  2) 키는 값을 찾기위한 키워드 : 중복 X (집합 자료)
+  3) 값은 중복 O
+  4) 구현 클래스
+	HashMap
+	TreeMap
+	   - Key의 정렬
+
+	참고)
+	  Hashtable
+	  properties
+
+	데이터 추가
+	   V put(K k, V v) : k가 없으면 추가, k가 있으면 수정
+	   V putIfAbsent(K k, V v) : K가 없을때만 추가
+	   void putAll(Map ...) :
+
+	데이터 조회
+	   V get(Object key) : key를 가지고 조회
+	   V getOrDefault(Object key, V defaultValuew) : key로 조회시 검색된 데이터가 없는 경우 defaultValue를 반환
+	  
+	   boolean containsKey(Object key)
+	  boolean containsValue(Object value)
+	   int size() : 요소 갯수
+
+	데이터 삭제
+	   V remove(Object key)
+	   boolean remove(Object key, Object value);
+	  
+	데이터 변경
+	   replace(...)
+
+
+
+
+	put(key, value)
+	   -> Map.Entry 구현 클래스의 객체(key-value pair) -> [] table...
+
+
+
+-----------------------------
+Collection 인터페이스
+ - List 인터페이스
+  - Set 인터페이스
+
+Map 인터페이스
+-------------------------------- 
+
+
+Stack과 Queue
+
+반복자 - 표준화
+Iterator
+  - Collection 인터페이스에 Iterator<E> iterator()가 정의 되어 있다.
+
+   - boolean hasNext() : 다음 요소가 있는지 체크
+   - E next() : 다음 요소를 추출
+   - 반복을 다하면 종료, 재활용 X (순방향)
+
+Listlterator
+  - List에만 정의된 iterator
+  - 순방향, 역방향
+
+Enumeration
+  - boolean hasMoreElements() : 다음 요소가 있는지 체크 
+   - V nextElement() 
+
+
+참고)
+GoF(Gang Of Four) 디자인패턴
+
+java.util 패키지
+Arrays(배열 편의기능)
+1. 배열의 복사 - copyOf(), copyOfRange()
+2. 배열 채우기 - fill(), setAll()
+3. 배열의 정렬과 검색 - sort(), binarySearch()
+4. 문자열 비교와 출력 - equals(), toString()
+5. 배열을 List로 변환 - asList(Object... a)
+
+deepToString(...) : 2차원 배열 이상
+
+---------------------------------------
+Comprator와 Comparable
+---------------------------------------
+
+
+Collections
+
+
+
+
+
+
+
+

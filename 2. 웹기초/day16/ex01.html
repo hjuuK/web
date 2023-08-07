@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <script>
+            window.addEventListener("DOMContentLoaded", function() {
+            //window.onload = function() {
+                const button = document.getElementById("button");
+                button.onclick = function() {
+                    alert("클릭 첫번째");
+                };
+
+                button.onclick = function() { // 함수는 객체이기 때문에 두번째 주소가 대입되면서 "클릭 첫번째" 는 실행이 안됨
+                    alert("클릭 두번째");
+                };
+            });
+
+            // window.onload = function() {
+            //     console.log("마지막 실행!");
+            // }    // window.addEventListener 대신 window.onload 로 쓸 때도 있지만 이 역시 객체이기 때문에 중복되면 위 코드가 실행이 안되기 때문에 사용 자제하는 것이 좋음
+
+        </script>
+        <button type="button" id="button">클릭</button>
+    </body>
+</html>

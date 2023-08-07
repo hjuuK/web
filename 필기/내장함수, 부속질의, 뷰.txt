@@ -1,0 +1,197 @@
+내장 함수
+
+숫자함수
+1. ABS(숫자)
+	- 절대값
+2. CEIL(숫자)
+	- 올림
+3. FLOOR(숫자)
+	- 버림
+4. ROUND(숫자, m)
+	- 반올림
+5. POWER(숫자, n)
+	- 숫자 n승
+	POWER(2, 3) -> 2^3=8
+6. SQRT(숫자)
+
+7. SIGN(숫자)
+	- 부호(음수 -1, 양수 1, 0)
+	
+//고객별 평균 주문금액을 백원 단위로 반올림한 값을 구하시오.
+//SELECT ROUND(AVG(saleprice), -2) "평균 주문금액", custid FROM Orders GROUP BY custid;
+
+
+문자함수
+1. CONCAT(s1, s2)
+	CONCAT(...str)
+	
+2. LOWER(s)
+	-대문자 -> 소문자
+	
+3. LAPD(s,n,c)
+	-> s의 문자열 길이가 n 미만일때 왼쪽 부터 c 문자로 채워 넣기
+	
+4. REPLACE(s1, s2, s3)
+	- s1에서 s2를 s3로 변경
+	
+5. RPAD(s,n,c)
+	-> s의 문자열 길이가 n 미만일때 오른족 부터 c 문자로 채워 넣기
+	
+6. SUBSTR(s,n,k)
+	- s문자열을 n번 위치부터 k개 잘라내기
+	- 위치에 숫자 1번부터 시작
+	
+7. TRIM(c FROM s)
+
+8. UPPER(s)
+	- 소문자 -> 대문자
+	
+9. ASCII(c)
+	- 문자 -> 아스키 코드
+	
+10. LENGTH(s)
+	-> 바이트 수 (한글 1자 - 3바이트)
+		ex) 가A나 : 7
+
+11. CHAR_LENGTH(s)
+	-> 문자의 갯수
+		ex) 가A나 -> 3
+		
+	
+	참고)
+		오라클
+			LENGTH() : 문자의 갯수	=> CHAR_LENGTH
+			LENGTHB() : 바이트 수		=> LENGTH
+			
+//SELECT LOWER('AaBbCcDd') 소문자, UPPER('AaBbCcDd') 대문자;
+//SELECT CONCAT('ABC', 'DEF', 'GHI');			--ABCDEFGHI
+//SELECT *, CONCAT(bookname, ":", publisher) "책이름:출판사" FROM book;
+
+//도서제목에 야구가 포함된 도서를 농구로 변경한 후 도서 목록을 보이시오.
+//SELECT bookid, REPLACE(bookname, '야구', '농구') bookname, publisher, price FROM Book;
+
+//굿스포츠에서 출판한 도서의 제목과 제목의 문자 수, 바이트 수를 보이시오.
+//SELECT bookname, CHAR_LENGTH(bookname) 문자수, LENGTH(bookname) 바이트수 FROM BOok WHERE publisher='굿스포츠';
+
+//마당서점 고객 중에서 같은 성씨를 가진 사람이 몇 명이나 되는지 성별 인원수를 구하시오.
+//SELECT COUNT(*) 인원수, SUBSTR(name, 1, 1) 성씨 FROM Customer GROUP BY SUBSTR(name, 1, 1);
+
+//SELECT LPAD(custid, 5, '0') custid, RPAD(SUBSTR(name, 1, 1), CHAR_LENGTH(name), '*') name, address, phone FROM Customer;
+
+//SELECT TRIM('=' FROM '=====ABC=====');		--ABC
+
+
+날짜, 시간 함수
+- 날짜 : 기본 형식(ISO) : 문자열 -> 날짜 자동 변환
+1. STR_TO_DATE(string, format)
+	- 문자열 형식 날짜 -> 날짜
+	//SELECT * fROM Orders WHERE orderdate=STR_TO_DATE('07-10-2014', '%m-%d-%Y');
+	
+2. DATE_FORMAT(date, format)
+	- 날짜 -> 형식화된 문자열
+	//SELECT DATE_FORMAT(orderdate, '%y.%m.%d') orderdate FROM Orders;
+	
+3. ADDDATE(date, interval)
+								 INTERVAL 10 DAY -> 10일 후
+								 INTERVAL -10 DAY -> 10일 전
+	//SELECT orderid, orderdate, ADDDATE(orderdate, INTERVAL 10 DAY) 확정일자 FROM Orders;
+	
+4. DATE(date)
+	-> 날짜와 시간 -> 날짜 부분만 반환
+
+5. DATEDIFF(date1, date2)
+	-> date1, date2의 날짜의 차이(일수)
+	//SELECT orderdate, DATEDIFF(orderdate, SYSDATE()) 경과일수 FROM Orders; 	-- 음수
+	//SELECT orderdate, DATEDIFF(SYSDATE(), orderdate) 경과일수 FROM Orders; 	-- 양수
+	
+6. SYSDATE() : 현재 시스템의 날짜와 시간
+	//SELECT SYSDATE() 현재날짜시간, DATE(SYSDATE()) 현재날짜, TIME(SYSDATE()) 현재시간;
+
+NULL 값 처리
+- 값이 없음
+- 연산 불가
+
+1. NULL 값에 대한 연산과 집계 함수
+	- NULL은 연산 X -> 집계 함수에서 제외
+	
+2. NULL 값을 확인하는 방법 - IS NULL, IS NOT NULL
+	비교 연산 X
+	IS NULL : 값이 NULL일때 참
+	IS NOT NULL : 값이 NULL이 아닐때 참
+	//SELECT * FROM Customer WHERE phone IS NULL;
+	
+	참고)
+		오라클
+			NULL, ''(빈값) --> NULL
+			
+		MySQL
+			NULL -> NULL, ''(빈값) --> 값
+			//SELECT * FROM Customer WHERE (phone IS NULL OR phone = '');
+
+3. IFNULL 함수
+	컬럼에 NULL인 값을 기본 값으로 대체
+	IFNULL(컬럼명, '컬럼명이 NULL일때 대체할 값')
+	//SELECT *, IFNULL(phone, '전화번호 없음') '전화번호' FROM Customer;
+
+행번호 출력
+	
+	SET 변수명:=값;
+	
+		변수명 앞에 @
+		
+	SET @seq:=0;
+	
+	//SET @seq:=10;
+	  SELECT @seq+100;
+		
+	//고객 목록에서 고객번호, 이름, 전화번호를 앞의 두 명만 보이시오.
+	//SET @seq:=0;
+		SELECT (@seq:=@seq+10) 순번, custid, name, phone FROM Customer WHERE @seq < 20;
+	
+1. SET := 기호
+
+
+
+부속질의
+
+1. 스칼라 부속질의 - SELECT 부속질의
+2. 인라인 뷰 - FROM 부속질의
+3. 중첩질의 - WHERE 부속질의
+1) 비교 연산자
+2) IN, NOT IN
+3) EXISTS, NOT EXISTS
+
+
+뷰
+- 하나 이상의 테이블을 합하여 만든 가상의 테이블
+- 합한다는 말은 SELECT 문을 통해 얻은 최종 결과
+- 복잡한 쿼리를 작성해야 하는 조회 -> 가상의 테이블 1개로 단순하게 변경
+- 보안적 이점
+
+- DDL 언어(데이터 정의어)
+- 조회
+
+1. 뷰의 생성
+	CREATE VIEW 뷰이름 AS SELECT 문
+		
+	//주소에 '대한민국'을 포함하는 고객들로 구성된 뷰를 만들고 조회하시오. 뷰의 이름은 vw_Customer로 설정하시오.
+	//CREATE VIEW vw_Customer AS SELECT * FROM Customer WHERE address LIKE '%대한민국%';
+	
+	//주소에 '대한민국'을 포함하는 고객들로 구성된 뷰를 만들고 조회하시오. 뷰의 이름은 vw_Customer로 설정하시오.
+	//CREATE VIEW vw_Orders AS SELECT o.*, c.name, b.bookname FROM Orders o, Customer c, Book b WHERE o.custid=c.custid AND o.bookid=b.bookid;
+	
+	//Orders 테이블에서 고객이름과 도서이름을 바로 확인할 수 있는 뷰를 생성한 후 '김연아' 고객이 구입한 도서의 주문번호, 도서이름, 주문액을 보이시오.
+	//SELECT orderid, bookname, saleprice FROM vw_Orders WHERE name='김연아';
+		
+2. 뷰의 수정
+	CREATE OR REPLACE VIEW 뷰이름 AS SELECT 문
+	
+	//이미 생성한 뷰 vw_Customer는 주소가 대한민국인 고객을 보여준다. 이 뷰를 영국을 주소로 가진 고객으로 변경하시오. phone 속성은 필요 없으므로 포함시키지 마시오.
+	//CREATE OR REPLACE VIEW vw_Customer AS SELECT custid, name, address FROM Customer WHERE address LIKE '%영국%';
+	
+3. 뷰의 삭제
+	DROP view 뷰이름;
+	
+	//앞서 생성한 뷰 vw_Customer를 삭제하시오.
+	//DROP VIEW vw_Customer;
+	

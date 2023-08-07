@@ -1,0 +1,356 @@
+네이티브 객체(ECMAScript)
+	내장 생성자 객체
+	
+	내장 객체
+	
+	
+호스트 객체 : 런타임 환경에 따른 객체
+	웹브라우저 객체
+		window
+			
+			location
+			history
+			screen
+			navigator
+			
+			document : 문서를 다룰 수 있는 객체
+			
+			
+		XMLHttpRequest 생성자 : ajax
+		FormData
+		...
+		
+-------------------------------------------
+
+웹 브라우저 객체
+
+1. 웹 브라우저에서 자바스크립트 실행 순서
+
+서버응답(텍스트 형태 HTML) -> 브라우저 변환(Document 객체), DOMTree 재구성(이진 트리) 완료 (작업 시간 소요)
+													-> DOMContentLoaded 이벤트 발생 (Document 객체 변환, DOMTree 완료)
+													-> load 이벤트 발생 (정적 자원의 로딩 완료 - 이미지, 비디오, css 파일, js 파일 ... 완료)
+
+
+참고)
+	<script>
+		자바스크립트코드 -> 자바스크립트 엔진(V8)에 의해서 해석
+	</script>
+	
+	<script src="스크립트 파일 경로"></script>
+		자바스크립트 파일 확장자 .js
+		
+	HTML 요소의 이벤트 처리 속성
+
+2. async와 defer 속성 - ES6 이후 추가된 속성
+	script 태그에 추가하는 속성
+	
+	async : 비동기처리
+	defer : script 파일을 DOMContentLoaded 이벤트 이후에 실행
+
+3. CSS와 렌더링
+
+4. 웹 브라우저 렌더링 엔진과 자바스크립트 엔진
+
+
+참고)
+	Document 객체 안에 Document 객체 포함되어 있는 구조
+		- 컴포지트 패턴 : UI 관련에서 많이 사용
+		
+	java.swing...
+		Component 객체 - Component 객체 구조
+		
+	안드로이드
+		View 객체 - View 객체 구조
+
+
+
+Window 객체
+- 가장 상위 객체
+- 창을 생성할때마다 독립적인 window 객체 생성
+
+1. Window 객체의 주요 프로퍼티
+	console
+				.log(...) : 값 확인
+				.dir(...) : 객체의 속성과 값..
+				.error(...) : 값 확인, 에러처럼 보이기 위해서 빨간색으로 출력
+				.trace() : 코드까지 도달하는데 거친 경로 stack 형태로 보여줄때 -> 오류확인할때 유용
+				
+	opener : 창을 열어준 window 객체
+		open(URL, 창의 이름, 옵션) : 반환값은 현재 열려진 window 객체
+		
+			옵션 : width - 너비
+					 height - 높이
+					 scrollbar=yes
+					 
+		close() : 창 닫기
+		
+	창의 너비와 높이
+		innerWidth, innerHeight : 스크롤바를 제외한 너비, 높이
+		outerWidth, outerHeight : 스크롤바를 포함한 너비, 높이
+		
+	스크롤한 정도
+		pageXOffset : 가로(좌->우) 스크롤 정도
+		pageYOffset : 세로(상->하) 스크롤 정도
+
+2. Window 객체의 주요 메서드
+	alert(...) : 알림 대화상자
+	prompt(...) : 입력 대화상자, 입력 받은 값이 반환값
+	confirm(...) : 확인, 취소 대화상자, 반환값 : 확인 버튼 -> true, 취소 버튼 -> false
+	
+	지연 실행
+	setTimeout(function() { // 이벤트 핸들러		=> 비동기 방식
+
+		// 5초뒤에 실행될 코드
+	}, 5000);
+	-----------------------------------------
+	setTimeout(function() {
+		console.log("작업 수행!");
+	}, 5000);
+
+	console.log("다음 작업");		
+	< 다음 작업
+	
+	< 작업 수행! 		=> 5초 뒤에 실행
+	-----------------------------------------	
+	
+	반복 지연 실행
+	setInterval(function() {
+		// 5초마다 실행될 코드
+	}, 5000);
+	-----------------------------------------	
+	setInterval(function() {
+    console.log("3초마다 반복 실행!");
+	}, 3000);
+	-----------------------------------------	
+	
+	clearTimeout(...) : 지연실행 취소
+	-----------------------------------------	
+	const timeoutId = setTimeout(function() {
+    console.log("7초 뒤에 실행!");
+	}, 7000);
+	undefined
+	clearTimeout(timeoutId);	=> 지연실행 취소
+	-----------------------------------------	
+	
+	clearInterval(...) : 지연 반복실행 취소
+
+
+	참고)
+		자바스크립트 : 싱글 쓰레드 모델
+			- 이벤트 주도 비동기 방식 -> 여러 작업을 동시에 처리
+
+
+Location 객체
+- 주소창과 관련된 속성과 기능을 담당하는 객체
+1. Location 객체의 프로퍼티
+2. Location 객체의 메서드
+		assign(주소) : 주소 이동 - 방문 기록을 하는 주소 이동
+			location.href와 동일
+			
+		replace(주소) : 주소 이동 - 방문 기록을 하지 않는 주소 이동
+		
+		
+		reload() : 새로고침
+
+	참고)
+		CTRL + SHIFT + N : 크롬 시크릿 모드
+
+
+History 객체
+	- 방문 기록을 다루는 객체
+
+1. History 객체의 프로퍼티
+	- length : 방문 기록의 갯수
+	- scrollRestoration: auto : 이전 페이지의 스크롤 위치 기억
+											 manual : 이전 페이지의 스크롤 위치 기억 X
+											
+2. History 객체의 메서드
+	- back() : 뒤로 1단계 이동
+	- forward() : 앞으로 1단계 이동
+	- go(숫자) 
+				: 음수 - 숫자만큼 뒤로 이동
+				: 양수 - 숫자만큼 앞으로 이동
+				
+
+Navigator 객체
+	- 브라우저의 환경 정보
+	
+1. Navigator 객체의 주요 프로퍼티
+	- geolocation
+	
+2. Navigator 객체의 메서드
+
+
+Screen 객체
+1. Screen 객체의 주요 프로퍼티
+	orientation
+				- landscape : 가로 모드
+				- portrait : 세로 모드
+
+창 제어하기
+1. 창 여닫기
+2. open 메서드로 설정할 수 있는 옵션의 이름
+3. 창 제어하기
+4. 다른 창 참조하기
+
+
+Document 객체
+
+1. Document 객체의 주요 프로퍼티
+	cookie : 개인화된 서비스 제공 용도 브라우저에 저장된 데이터
+	referrer : 직전 URL		=> 마케팅 부서에서 많이 활용
+2. Document 객체 주요 메서드
+
+문서 제어
+1. DOM 트리
+
+노드 객체의 프로퍼티
+1. children : 자식 요소
+2. parentElement : 부모 요소
+3. firstElementChild : 자식의 첫번째 요소
+4. lastElemnetChild : 자식의 마지막 요소
+5. nextElementSibling : 바로 뒤에 있는 형제 (오른쪽)
+6. previousElementSibling : 바로 앞에 있는 형제 (왼쪽)
+7. childElementCount : 자식 요소의 갯수		=> ul.children.length;
+
+
+document 객체를 통해서 바로 접근할 수 있는 요소
+head
+body
+form - name 속성
+		 - 입력 항목도 name으로 바로 접근 가능
+
+
+자바스크립트로 웹 페이지 제어하기
+
+1. 노드 객체 가져오기
+1) id 속성으로 노드 가져오기
+	- 한개만 선택
+	- document.getElementById("아이디명");
+	
+2) 요소 이름으로 노드 가져오기
+	- 복수개 선택
+	- document.getElementsByTagName("태그명");
+
+3) class 속성 값으로 노드 가져오기
+	- 복수개 선택(HTMLCollection)
+	- document.getElementsByClassName("클래스명");
+	- document.getElementsByClassName("클래스명 클래스명"); // 여러개일 경우 띄어쓰고 클래스명
+
+4) name 속성 값으로 노드 가져오기
+	- 복수개 선택
+	- document.getElementsByName("Name 속성명");
+	
+5) CSS 선택자로 노드 가져오기
+	- document.querySelector(".CSS 선택자"); : 단일 선택
+	- document.querySelectorAll(".CSS 선택자"); : 복수개 선택
+
+참고) 
+	선택된 DOM은 살아 있는 상태 : 변경 사항이 바로 반영
+
+2. 속성 값의 읽기와 쓰기
+	(attribute)
+	document
+		- attributes : 속성 전체 정보 객체
+		
+		
+		- getAttribute("속성명") : 속성값 조회
+		- setAttribute("속성명", "속성값") : 없으면 추가, 있으면 변경
+		- removeAttribute("속성명") : 속성 제거
+		
+		
+		사용자가 추가하는 정보성 속성 : data-속성명="값"; => 권장사항
+				- document 객체의 하위 속성 객체 dataset		// ⭐⭐중요
+					- 객체의 속성 추가, 수정, 삭제와 동일하게 관리 가능
+						(data-는 생략 가능) => dataset으로 접근하면 -는 카멜 표기법으로 변경됨
+						--------------------------------------------------
+						const priceEl = document.getElementById("price");
+						const dataset = priceEl.dataset;
+						dataset;
+						< DOMStringMap {salePrice: '10000', productNm: '상품명'}
+						dataset.salePrice;
+						< '10000'
+						dataset.salePrice = 20000;
+						< 20000
+						--------------------------------------------------
+						
+						속성 제거 : delete dataset.속성명;
+						
+						
+		클래스 속성 : 기능, 동작의 통제 용도로 추가, 제거를 주로 많이 한다.
+			- document 객체의 하위 속성 classList 객체		// ⭐⭐중요
+					- add("클래스명") : 클래스 추가
+					- contains("클래스명") : 클래스명 포함 여부
+					- remove("클래스명") : 제거
+					- toggle("클래스명") : 클래스명이 없으면 추가, 있으면 제거
+		
+		--------------------------------------------------
+		// class1 class2 class4 일때 class2와 class4 사이에 class3 추가하기
+		
+		const button = document.getElementById("button");
+		let className = button.className;
+		className = className.split(" "); // 공백 제거
+		> (3) ['class1', 'class2', 'class4']
+		className.splice(2, 0, "class3"); // 2번째, 삭제는 0개
+		> []
+		className;
+		> (4) ['class1', 'class2', 'class3', 'class4']
+		className = className.join(" ");
+		> 'class1 class2 class3 class4'
+		button.className = className;
+		> 'class1 class2 class3 class4'
+		--------------------------------------------------
+		// classList 객체
+		// 추가하면 class1 class2 class4 class3 순서 (맨 뒤에 추가됨)
+		
+		const button = document.getElementById("button");
+		button.classList.add("class3");		// 추가
+		button.classList.contains("class3");		// 포함 여부
+		< true
+		button.classList.remove("class3"); 		// 제거
+		button.classList.toggle("class3");		// 없으면 추가, 있으면 제거
+		< true
+		--------------------------------------------------
+		
+		
+		참고)
+			많이 사용되는 속성은 document 객체의 하위 속성으로 바로 접근 가능
+				- type
+				- name
+				- id
+				- href
+				- src
+				- action
+				- target
+				- width, height
+				- className : 클래스
+				- value
+				
+				- 속성은 살아있는 상태 : 변경되는대로 기능이 변경
+
+3. HTML 요소의 내용을 읽고 쓰기
+	document
+		.innerHTML : 자식요소의 HTML 문자열
+							 : 변경하면 바로 변경
+		.innerText : 자식요소의 Text 문자열 (=> HTML 요소는 제거) // text로 인식
+							 : 변경하면 바로 변경
+
+4. 노드 생성/삽입/삭제하기
+
+노드 생성
+	document
+		.createElement("요소명"); : 메모리상에만 document객체가 생성된 상태 (노출 X)
+		.createTextNode("텍스트명"); 
+		
+	
+	삽입
+		document 객체
+				.appendChild(추가할 자식 요소);
+				
+		중간에 추가
+				document객체(부모)
+					.insertBefor("추가할 요소", 기준 요소);
+				
+	제거
+		document 객체(부모)
+				.removeChile("자식 요소");

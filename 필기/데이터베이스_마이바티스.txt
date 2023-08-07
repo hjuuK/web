@@ -1,0 +1,74 @@
+마이바티스(mybatis) 프레임워크 설치 및 적용
+1. 설정
+	POOLED -> 커넥션 풀
+	
+	
+	<select ...>
+	<update ...>
+	<insert ...>
+	<delete ...>
+
+
+2. TypeHandler 적용하기
+	1) java.time 패키지 적용
+		mybatis-typehandlers-jsr310 의존성 추가
+		<typeHandlers>
+			<typeHandler handler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />
+			<typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler" />
+			<typeHandler handler="org.apache.ibatis.type.LocalTimeTypeHandler" />
+		</typeHandlers>
+	2) Enum 타입 적용
+		<typeHandlers>
+			<typeHandler handler="EumTypeHandler" />
+		</typeHandlers>
+		
+3. 적용해보기
+	SqlSession
+		- selectOne : 개별 조회
+		- selectList : 목록 조회
+		- insert : 추가
+		- update : 수정
+		- delete : 삭제
+		
+4. MyBatis와 SLF4J 연동하기
+SLF4J-API
+logback classic
+
+<settings>
+	<setting name="logImpl" value="SLF4J" />
+</settings>
+
+
+
+
+----------------------------------------------------------------------
+
+트랜잭션
+SQL 작성의 단위
+
+
+COMMIT할때까지의 단위 : 트랜잭션 : DB에 영구 반영
+
+COMMIT 전까지는 ROLLBACK : 복구 가능
+
+
+SQL1
+SQL2
+SQL3
+COMMIT -> DB에 영구 반영 	// COMMIT 하기 전에는 메모리에만 있어서 복구가 가능
+
+----------------------------------------------------------------------
+0801
+
+마이바티스(mybatis) 프레임워크 설치 및 적용
+https://mybatis.org/mybatis-3/ko/dynamic-sql.html
+
+동적 SQL
+1. if
+2. choose, when, otherwise
+3. trim, where, set
+
+	- trim
+		- prefix
+		- prefixOverrides
+		- suffixOverrides

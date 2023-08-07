@@ -1,0 +1,56 @@
+HTML
+1. 정의
+  HyperText Markup Language
+  웹페이지의 구조를 표현
+
+   태그로 구성된 문서
+   <태그명>...내용...</태그명>
+   여는 태그	      닫는 태그
+
+  <단일태그/> : /는 생략 가능 : <단일태그>
+      예) <meta ...>
+	<img ...>
+
+  확장자가 .html
+2. 기본 구조
+  - head 태그 : 사이트의 정보(meta), 자원들(CSS, JS)
+		보이지 않는 부분을 정의
+   - body 태그 : 보이는 부분
+
+3. HTML 요소
+  요소(Element) : HTML 태그
+  
+4. HTML 속성(attributes)
+   - 태그에 있는 추가된 추가 정보
+      속성명="값"
+
+  - 태그 고유의 기능이 참고 하는 정보로써 속성
+
+   예) a : 하이퍼링크 -> 페이지 이동 담당
+	- href="이동할 경로"
+
+     img - 이미지를 출력하는 태그
+	- src="이미지 경로"
+
+   참고) 
+     F5, CTRL + R : 새로고침
+
+5. 헤더(Headings) 태그
+  - 제목을 표현하는 태그
+  <h1~h6></h1~6>
+
+  주제목 ... > 부제목
+
+6. 문단(Paragrahs) 태그
+  <p></p>
+
+
+7. 서식(Text Formatting) 태그
+8. 인용, 인용문, 정의(Quotation and Citation Elements) 태그
+9. 주석(Comments)
+10. 링크(Links)
+11. 이미지(Images)
+12. 테이블(Tables)
+13. 리스트(Lists) 태그
+14. Block & Inline 요소
+15. class 속성

@@ -1,0 +1,45 @@
+부모 : display: flex; - 자식요소에 대한 배치
+
+flex-direction : 배치 방향
+								 row - 기본값 : 좌 -> 우 배치
+								 row-reverse - 우 -> 좌 배치
+								 column : 위 -> 아래 배치
+								 column-reverse : 아래 -> 위 배치
+								 
+justify-content :
+									flex-start : 좌로 정렬
+									flex-end : 우로 정렬
+									center : 가운데 정렬
+									
+									space-between 
+									space-around
+									space-evenly
+									
+align-items : 
+							stretch : 부모 요소의 높이에 자식요소를 맞춘다.
+							flex-start : 위로 정렬
+							flex-end : 아래로 정렬
+							center : 가운데 정렬
+							
+							
+flex-wrap
+					: nowrap - 한줄에 다 배치 (기본값)
+					  wrap - 끝에 도달하면 줄 개행
+						
+flex-grow : 여백을 비율별로 균등 배분
+						요소의 너비를 균등 배분할 경우 너비를 0으로 지정 { width: 0; }
+						
+						
+index.html
+
+
+
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+
+
+width=device-width
+
+user-scalable=yes - 확대 가능, no - 확대불가
+initial-scale=1.0
+maximum-scale=3.0 / 300% 확대 가능
+minimum-scale=0.5 / 50% 축소 가능

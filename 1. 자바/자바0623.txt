@@ -1,0 +1,81 @@
+형상관리 툴(GIT)
+- CVS
+- SVN
+- GIT
+
+- 버전관리
+
+이메일 주소 : khj020508@naver.com
+사용자명 : hjuuK
+
+C:\Users\khj02\OneDrive\바탕 화면\koreait JAVA\김혜주\2. 웹기초\git_exam
+
+로컬 레포지토리 생성
+git init
+
+계정 연결 설정
+git config --global user.name "hjuuK"  (--global 옵션은 내 pc일때 넣어주면 좋음)
+git config --global user.email "khj020508@naver.com"
+
+
+
+스냅샷 방식
+
+스테이징 단계
+git add 파일명, 파일 경로
+git add .(모든 파일)
+
+
+스냅샷 단계 (커밋) - 버전 기록
+git commit -m "작업 내용 메모"
+
+
+커밋 로그
+git log
+git log --oneline : 로그를 한줄로 짧게 확인
+
+
+버전 관리
+git checkout 커밋 ID
+git checkout - : 직전 단계로 복구
+
+
+브랜치 
+master 브랜치 - 기본 브랜치
+- git branch : 현재 생성된 브랜치 목록
+- git branch 브랜치명 - 현재 브랜치의 소스와 함께 브랜치가 생성
+- git checkout 브랜치명 - 브랜치로 이동
+
+ -git branch -d 브랜치명 - 브랜치 삭제
+ 	       -D 브랜치명 - 브랜치 강제 삭제
+
+
+브랜치 병합
+git merge 브랜치명 - 현재 브랜치에 브랜치명의 브랜치를 병합
+
+  - 테스트 브랜치 하나 생성 -> 다른 작업을 병합 -> 테스트 -> 마스터에 병합
+
+
+원격 레포지토리(원격 저장소)
+  - 깃허브
+   - 비트버킷
+   - 깃랩
+
+
+원격 레포지토리 연결
+git remote add origin 원격 레포지토리 주소 : 원격 저장소(레포지토리) 주소 추가
+git remote set-url origin 원격 레포지토리 주소 : 기존 주소 변경
+
+
+로컬 저장소(레포지토리) 상태 -> 원격 저장소(레포지토리)에 반영
+git push origin 브랜치명
+
+
+원격 저장소(레포지토리) 상태 -> 로컬 저장소(레포지토리)에 반영
+git pull origin 원격 브랜치명
+
+
+원격 저장소 -> 로컬 저장소 복사
+git clone 원격 저장소 주소
+
+sourcetree - GIT GUT 툴
