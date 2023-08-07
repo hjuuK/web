@@ -1,0 +1,39 @@
+칸반보드 만들기
+1. 초기설정
+	1) 의존성 설정
+	2) 데이터베이스 연결 설정 (mybatis)
+	
+		작업 내용
+		
+		테이블명 workList
+			workNo INT, PK, AI : 작업 번호
+			userNo INT, FK : 회원 번호
+			status ENUM('READY', 'PROGRESS', 'DONE', 'POSTPONE') // 준비, 진행, 완료, 연기 : 작업 상태
+			subject VARCHAR(255) : 작업명
+			content LONGTEXT : 작업 상세 내용
+			regDt DATETIME DEFAULT NOW() : 작업 등록 일시
+			modDt DATETIME : 작업 수정 일시
+			
+			CREATE TABLE `kanban`.`worklist` (
+				`workNo` INT NOT NULL AUTO_INCREMENT,
+				`userNo` INT NULL,
+				`status` ENUM('READY', 'PROGRESS', 'DONE', 'POSTPONE') NOT NULL DEFAULT 'READY',
+				`subject` VARCHAR(255) NOT NULL,
+				`content` LONGTEXT NOT NULL,
+				`regDt` DATETIME NULL DEFAULT NOW(),
+				`modDt` DATETIME NULL,
+				PRIMARY KEY (`workNo`));
+
+	
+2. 레이아웃 구성
+3. 컨트롤러, 모델, 뷰 구성하기 (MVC)
+M(Model) : 기능 (Service)
+						DTO(Data Transfer Object) : 데이터 전달용 객체
+								VO(Value Object)
+						DAO(Data Access Object) : 데이터에 접근하는 객체 : 데이터 추가, 조회, 수정, 삭제
+																			(CRUD)(Create : Insert / Read : Select / Update / Delete)
+						기타 필요 객체 ...
+V(View) : 출력(응답) : jsp
+C(Controller)
+	- 요청과 응답의 중재자 : servlet
+	

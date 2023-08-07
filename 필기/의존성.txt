@@ -1,0 +1,19 @@
+1. servlet-api	
+2. servlet.jsp-api
+3. jstl-api
+4. jstl impl
+5. mysql diver
+6. mybatis 
+7. slf4j api + logback classic
+8. lombok
+
+
+https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api/6.0.0
+https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api/3.1.1
+https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api/3.0.0
+https://mvnrepository.com/artifact/org.glassfish.web/jakarta.servlet.jsp.jstl/3.0.1
+https://mvnrepository.com/artifact/com.mysql/mysql-connector-j/8.0.33
+https://mvnrepository.com/artifact/org.mybatis/mybatis/3.5.13
+https://mvnrepository.com/artifact/org.slf4j/slf4j-api/2.0.7
+https://mvnrepository.com/artifact/ch.qos.logback/logback-classic/1.4.8		test부분 지우기
+https://mvnrepository.com/artifact/org.projectlombok/lombok/1.18.28
