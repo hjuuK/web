@@ -37,3 +37,33 @@ V(View) : 출력(응답) : jsp
 C(Controller)
 	- 요청과 응답의 중재자 : servlet
 	
+	
+	
+	
+이미지
+- 미리캔버스
+- 캔바
+
+
+
+비밀번호
+	암호화
+		1) 양방향 암호화
+			암호화 <---> 복호화 : AES256, ARIA
+			
+		2) 단방향 암호화
+			암호화 <-- X --> 복호화 : 해시
+			- 고정 해시 : 같은 값에 대한 동일한 해시
+				md5, sha1, sha256, sha512 ..
+				- 사용자가 입력한 비밀번호를 해시 값이 DB에 있는 해시와 일치 체크
+				- 고정 해시는 해킹이 쉬워서 위험함
+				
+			- 유동 해시 : 같은 값에 대해서 해시를 만들때마다 다른 해시
+				Bcrypt
+				
+				abc
+				$2a$12$QFBKf4e9WDnyx/D1tJhndeenmEp9r5oD4wokGGsVJcQaYm/6vZAXi
+				$2a$12$mdOidGs2F48qmfGdzhoScuelNdFFoNy.gjmqWjonVI/4IALmYcJq.
+				
+				- 별도의 체크 함수를 통해서 검증
+			
