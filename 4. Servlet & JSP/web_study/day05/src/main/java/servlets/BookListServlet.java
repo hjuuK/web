@@ -17,6 +17,9 @@ import java.util.stream.IntStream;
 public class BookListServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        System.out.println("doGet()!");
+
         List<Book> books = new ArrayList<>();
         IntStream.rangeClosed(1, 10).forEach(x -> insertBook(x, books));
         req.setAttribute("books", books);
