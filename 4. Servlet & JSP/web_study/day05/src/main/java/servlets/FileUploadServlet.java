@@ -34,7 +34,7 @@ public class FileUploadServlet extends HttpServlet {
                 String contentType = item.getContentType();
                 Path path = Path.of("C:/uploads/" + fileName);
                 item.write(path);
-                System.out.printf("fileName : %s, contentType : %s%n", fileName, contentType);
+                System.out.printf("fileName : %s, contentType : %s%n", fileName, contentTyper);
             }
         }
     }
