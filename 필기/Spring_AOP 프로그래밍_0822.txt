@@ -1,0 +1,88 @@
+AOP 프로그래밍
+Aspect Oriented Programming : 프록시
+
+1. 프록시(proxy) : 대신하다, 대리하다
+	계산기
+	팩토리얼 연산 / !5 = 5*4*3*2*1
+	
+	
+	class BufferedInputStream extends InputStream {
+		private InputStream in;
+		
+		public BufferedInputStream(inputStream in) {
+			this.in = in;
+		}
+		
+		public int read() {
+		
+		// 버퍼 추가 기능... -> 추가 공통 기능
+		
+		int ch = in.read(); // 핵심 기능을 대신 수행
+		
+		// 버퍼 추가 기능... -> 추가 공통 기능
+		
+		return ch;
+		}
+	}
+	- 데코레이터 패턴  ex) BufferedInputStream / BufferedOutputStream
+	
+	참고) 프록시 패턴
+		- 제어, 통제의 관점 : ex) 방화벽
+		
+		- 스프링쪽에서 의미하는 프록시는 사실 데코레이터 패턴, 대신하다라는 의미에서 관례적으로 프록시라는 명칭을 사용
+
+2. AOP
+- Aspect Oriented Programming : 관점 지향 프로그래밍
+	관점 : 공통 기능
+	spring aop API
+	+ 구현체 : aspectjweaver		// https://mvnrepository.com/artifact/org.aspectj/aspectjweaver/1.9.20  // runtime 제거
+	
+	
+	spring-context		// https://mvnrepository.com/artifact/org.springframework/spring-context/6.0.11
+	
+3. @Aspect, @Pointcut, @Around를 이용한 AOP 구현
+1) @Aspect : 공통 기능이 정의된 클래스
+2) @Pointcut : 공통 기능 적용 범위
+3) @Around : 공통 기능을 수행할 메서드
+
+4. ProceedingJoinPoint의 메서드
+1) Object proceed() // 핵심 기능 수행
+
+2) Signature getSignature() : 호출한 메서드에 대한 정보
+	- String getName()
+	- String toLongString() : 접근제어자 + 반환값 타입 + 메서드명 + 매개변수 ..
+	- String toShortString()
+	
+3) Object getTarget() : 호출한 메서드가 소속된 객체
+4) Object[] getArgs() : 매개변수로 사용된 값
+
+
+참고)
+	@enable...
+
+ProxyCache가 먼저 수행되어야함 / 순서가 반대면 절대 실행되지 않음
+ProxyCache -> ProxyCalculator : 순서의 보장이 매우 중요한 프록시
+
+5. 프록시 생성방식
+
+6. execution 명시자 표현식
+	참고)
+		Ant 패턴
+		패키지
+			.
+				ex) aopex.* : aopex의 하위 모든 클래스
+				
+			..
+				ex) aopex..* : aopex의 하위 클래스 + 하위 패키지를 포함한 모든 클래스
+				
+			* : 모든 반환값, 모든 클래스, 모든 메소드, 모든 자료형
+			
+			
+			* aopex.*.* => * aopex.*
+			* aopex..*.* => * aopex..*
+			
+7. @Order
+	: 프록시 실행 순서가 중요한 경우에는 적용 순서를 명시
+	: 숫자가 작을수록 먼저 수행
+	
+8. @Around의 Pointcut 설정과 @Pointcut 재사용
