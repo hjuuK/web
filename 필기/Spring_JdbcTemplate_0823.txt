@@ -46,7 +46,34 @@ INSERT INTO member VALUES (?, ?, ? ...)
 	DEBUG
 	TRACE
 	
-4. PreparedStatement
+
+
+
+7. 트랜잭션 처리
+
+SQL1
+SQL2
+SQL3
+SQL4
+
+COMMIT -> DB에 영구 반영
+
+conn.setAutoCommit(flase); // 추가 공통 기능
+
+pstmt.executeUpdate(...) // 핵심기능
+pstmt.executeUpdate(...) // 핵심기능
+pstmt.executeUpdate(...) // 핵심기능
+pstmt.executeUpdate(...) // 핵심기능
+
+conn.commit(); // 추가 공통 기능
+
+conn.rollback(); // 다시 되돌리기
+
+
+1) @Transactional
+	- Proxy 구현(AOP)
+2) Platform TransactionManager
+3) DataSourceTrasactionManager
 
 
 ---------------

@@ -8,12 +8,14 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+//@Transactional
 public class MemberDao {
     private final JdbcTemplate jdbcTemplate;
 
@@ -28,6 +30,7 @@ public class MemberDao {
     }
      */
 
+    @Transactional
     public boolean register(Member member) {
         String hash = BCrypt.hashpw(member.getUserPw(), BCrypt.gensalt(12));
         String sql = "INSERT INTO member (userId, userPw, userNm) VALUES (?,?,?)";
