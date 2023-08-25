@@ -22,5 +22,26 @@
             <form:password path="userPwRe" />
         </dd>
     </dl>
+    <dl>
+        <dt>회원명</dt>
+        <dd>
+            <form:input path="userNm" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>이메일</dt>
+        <dd>
+            <form:input path="email" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>전화번호</dt>
+        <dd>
+            <form:input path="mobile" />
+        </dd>
+    </dl>
+    <div>
+        <form:checkbox path="agree" value="true" label="회원가입 약관에 동의합니다." />
+    </div>
     <button type="submit">가입하기</button>
 </form:form>
