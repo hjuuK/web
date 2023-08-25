@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 public class MemberJoinController {
     @GetMapping  // /member/join
     //@RequestMapping(method=RequestMethod.GET, path="/member/join")
-    public String join() {
-        return "member/join";
+    public String join(Model model) {
+        model.addAttribute("joinForm", new JoinForm()); // springform 사용 -> GET방식에 이걸 넣어야만 오류가 없음 (???)
+
+        return "member/join2";
     }
 
     @PostMapping
