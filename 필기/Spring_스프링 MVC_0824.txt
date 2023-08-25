@@ -68,6 +68,17 @@ HttpServletRequest
 - @RequestParam : 요청 파라미터와 다른 명칭의 변수에 값을 주입
 
 2. 커맨드 객체
+	- getter, setter 형태의 객체
+	
+	JSP : 속성을 관리하는 객체 4가지
+	1. PageContext pageContext
+	2. HttpServletRequest request
+	3. HttpSession session
+	4. ServletContext application
+			setAttribute(String name, Object value)
+			
+	-> EL 속성으로 자동 추가 : 클래스명에서 앞글자만 소문자인 속성명으로 추가
+
 3. 커맨드 객체 : 중첩·콜렉션 프로퍼티
 4. 리다이렉트
 5. 컨트롤러 구현 없는 경로 매핑
@@ -75,3 +86,11 @@ HttpServletRequest
 1) <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 2) <form:form>
 	- modelAttribute
+	
+	
+7. 모델
+	Model
+		.addAttribute(String name, Object value)
+		.addAllAttribute(Map ...)
+		
+	-> 요청 메서드로 정의 : 주입
