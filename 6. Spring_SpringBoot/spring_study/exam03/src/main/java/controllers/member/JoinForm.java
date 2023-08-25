@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class JoinForm { // 요청 데이터에 의한 전달 객체
+    private String type;
     private String userId;
     private String userPw;
     private String userPwRe;

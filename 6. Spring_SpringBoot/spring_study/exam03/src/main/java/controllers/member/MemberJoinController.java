@@ -19,6 +19,9 @@ public class MemberJoinController {
         List<Item> hobbies = getHobbies();
         model.addAttribute("hobbies", hobbies);
 
+        List<Item> types = getMemberTypes();
+        model.addAttribute("types", types);
+
         return "member/join2";
     }
 
@@ -31,7 +34,19 @@ public class MemberJoinController {
         List<Item> hobbies = getHobbies();
         model.addAttribute("hobbies", hobbies);
 
+        List<Item> types = getMemberTypes();
+        model.addAttribute("types", types);
+
         return "member/join2";
+    }
+
+    private List<Item> getMemberTypes() { // 회원종류
+        List<Item> types = Arrays.asList(
+                new Item("개인회원", "private"),
+                new Item("사업자회원", "company")
+        );
+
+        return types;
     }
 
     private List<Item> getHobbies() { // label과 value를 직접 입력할 수 있도록 만듦 (Item.java)
