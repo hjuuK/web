@@ -37,7 +37,7 @@ public class MemberJoinController {
         List<Item> types = getMemberTypes();
         model.addAttribute("types", types);
 
-        return "member/join2";
+        return "redirect:/member/login"; // redirect:/ 키워드만 입력
     }
 
     private List<Item> getMemberTypes() { // 회원종류
