@@ -21,4 +21,10 @@ public class HelloController {
 
         return mv;
     }
+
+    @GetMapping("/test")
+    public String test() {
+
+        return "hello";
+    }
 }

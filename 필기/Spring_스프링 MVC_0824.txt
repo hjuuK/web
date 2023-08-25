@@ -88,7 +88,8 @@ HttpServletRequest
 1) <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 2) <form:form>
 	- modelAttribute : 커맨드 객체의 이름(EL식 속성 이름)
-	
+	- 커맨드 객체의 이름이 command이면 생략 가능
+	- @ModelAttribute : -> 커맨드 객체의 EL식 속성명을 변경할 수 있음
 3) <input> 관련 커스텀 태그
 	- <form:input>  / type='text' / path="요청 파라미터 명 / 커맨드 객체의 속성 명"
 	- <form:password>
@@ -106,6 +107,24 @@ HttpServletRequest
 		- items : 배열, 컬렉션 형태
 	- <form:checkbox>
 		- label, value
+6) 라디오 버튼 관련 커스텀 태그
+	- <form:radiobuttons>
+	- <form:radiobutton>
+7) <form:textarea>
+
+8) CSS 및 HTML 태그와 관련된 공통 속성
+	- cssClass : HTML의 class 속성값
+	- cssErrorClass : 폼 검증 에러가 발생했을 때 사용할 HTML의 class 속성값
+	- cssStyle : HTML의 style 속성값
+	
+	- id, title, dir
+	- disabled, tabindex
+	- fonfocus, onblur, onchange onclick, ondblclick
+	- onkeydown, onkeypress, onkeyup
+	- onmousedown, onmousemove, onmouseup
+	- onmouseout, onmouseover
+	
+	- htmlEscape
 	
 7. 모델
 	Model
@@ -113,3 +132,14 @@ HttpServletRequest
 		.addAllAttribute(Map ...)
 		
 	-> 요청 메서드로 정의 : 주입
+	
+
+요청 메서드에 자동 주입
+1) 커맨드 객체 : 요청 데이터가 전부 다 주입
+2) Model
+3) Errors : 커맨드 객체의 검증 실패(유효성 검사)시 에러데 대한 정보가 담겨 있는 객체
+
+서블릿 기본 객체 : 스프링 컨테이너에 관리 객체로 추가 : 요청 메서드의 주입, 의존성 자동 주입(@Autowired)
+4) HttpServletRequest
+5) HttpServletResponse
+6) HttpSession

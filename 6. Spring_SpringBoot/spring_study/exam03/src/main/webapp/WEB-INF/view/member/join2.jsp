@@ -4,10 +4,26 @@
 <c:url var="action" value="/member/join" />
 
 <form:form method="POST" action="${action}" modelAttribute="joinForm">
+    ${joinForm}
+    <dl>
+        <dt>가입유형</dt>
+        <dd>
+            <%--
+            <form:radiobuttons path="type" items="${types}" itemLabel="label" itemValue="value" />
+            --%>
+            <%--
+            <form:select path="type" items="${types}" itemLabel="label" itemValue="value" />
+            --%>
+            <form:select path="type">
+                <option value="">- 선택하세요 -</option>
+                <form:options items="${types}" itemLabel="label" itemValue="value" />
+            </form:select>
+        </dd>
+    </dl>
     <dl>
         <dt>아이디</dt>
         <dd>
-            <form:input path="userId" />
+            <form:input path="userId" cssClass="on" cssStyle="border: 1px solid red;" />
         </dd>
     </dl>
     <dl>
@@ -44,6 +60,12 @@
         <dt>취미</dt>
         <dd>
             <form:checkboxes path="hobby" items="${hobbies}" itemLabel="label" itemValue="value" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>자기소개</dt>
+        <dd>
+            <form:textarea path="intro" rows="10" cols="40" />
         </dd>
     </dl>
     <div>
