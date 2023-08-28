@@ -68,7 +68,7 @@
 5. 글로벌 범위 Validator와 컨트롤러 범위 Validator
 1) 글로벌 범위 Validator 설정과 @Valid 애노테이션
 -  WebMvcConfigurer의 getValidalor() 
-- @Valid 커맨드 객체  : 검증을 할 커맨드 객체
+- @Valid 커맨드 객체  : 검증을 할 커맨드 객체		// Errors errors 받을 수 있는 변수가 있어야 함  /ex) (@Valid JoinForm form, Errors errors, Model model)
 	- Bean Validation API + Hibernate Validator
 	
 2) @InitBinder 애노테이션을 이용한 컨트롤러 범위 Validator
@@ -82,9 +82,9 @@ WebMvcConfigurer
 	getValidalor() : 전역 Validator 설정
 	-> @Valid 애노테이션을 커맨드 객체 앞에 
 
-6. Bean Validation API	⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+6. Bean Validation API	⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ // https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api/3.0.2
 - jakarta.validation 패키지
-+ Hibernate Validator
++ Hibernate Validator		// https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator/8.0.1.Final 	
 
 
 1) 설정

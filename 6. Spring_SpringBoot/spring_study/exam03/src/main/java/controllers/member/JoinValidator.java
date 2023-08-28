@@ -42,9 +42,11 @@ public class JoinValidator implements Validator {
 //            errors.rejectValue("userNm", "required", "회원명을 입력하세요.");
 //        }     => 안쓰게 됨 => ValidationUtils.rejectIfEmptyOrWhitespace(); 사용
 
+        /*
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userId", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userPw", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userPwRe", "required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userNm", "required");
+         */
     }
 }

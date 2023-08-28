@@ -1,11 +1,13 @@
 package controllers.member;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -36,7 +38,7 @@ public class MemberJoinController {
     }
 
     @PostMapping
-    public String joinPs(/*@ModelAttribute("command") */ JoinForm form, Errors errors, Model model) { // 커맨드 객체 // joinForm -> joinForm : EL 속성 추가
+    public String joinPs(/*@ModelAttribute("command") */ @Valid JoinForm form, Errors errors, Model model) { // 커맨드 객체 // joinForm -> joinForm : EL 속성 추가
         //model.addAttribute("joinForm", joinForm); // join.sjp => EL식으로 데이터 사용 -> 주입
         //System.out.println(form);
 
@@ -49,7 +51,7 @@ public class MemberJoinController {
 
         commonProcess(model);
 
-        joinValidator.validate(form, errors);
+        //joinValidator.validate(form, errors);
 
         if (errors.hasErrors()) { // reject, rejectValue -> true
             return "member/join2";
@@ -85,6 +87,14 @@ public class MemberJoinController {
 
         return hobbies;
     }
+
+    /*
+    @InitBinder
+    public void InitBinder(WebDataBinder binder) { // 공통적인 Validator
+        binder.setValidator(joinValidator);
+    }
+
+     */
 
     /*
     private List<String> getHobbies() {
