@@ -4,6 +4,10 @@
 1. 메시지
 1) MessageSource
 2) ResourceBundleMessageSource
+	<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+	<spring:message code="메세지 코드" />
+		- arguments="값1, 값2..."
+
 3) 다국어 지원 위한 메시지 파일
 	commons_en.proproperties
 	commons_jp.properties
@@ -14,6 +18,8 @@
 					변수명은 커맨드 객체 클래스명에서 첫 글자만 소문자
 
 1) Validator 인터페이스 
+	- supports(...) : 검증할 커맨드 객체의 유형을 한정
+	- validate(...) : 실검증 코드가 작성되는 메서드
 	
 2) Errors
 		- 커맨드 객체 자체의 오류 -
