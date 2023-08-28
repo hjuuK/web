@@ -5,11 +5,11 @@
 1) MessageSource
 2) ResourceBundleMessageSource
 	<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-	<spring:message code="메세지 코드" />
+	<spring:message code="메세지 코드" />	⭐⭐⭐⭐⭐
 		- arguments="값1, 값2..."
 
 3) 다국어 지원 위한 메시지 파일
-	commons_en.proproperties
+	commons_en.properties
 	commons_jp.properties
 	commons._zn.properties
 
@@ -36,6 +36,8 @@
 		- 에러의 정보 
 		
 		- 템플릿 연동 
+		<form:errors path="필드명 이름" />	⭐⭐⭐⭐⭐	요소를 바꾸려면 element="div" 로 바꾸면 됨(기본값은 span)
+		
 		#fields.errors("필드명") : 특정 필드의 에러 메세지, 배열 
 		#fields.globalErrors() : 커맨드 객체 자체 에러 메세지
 			참고)#fields.errors('global')
@@ -44,8 +46,8 @@
 		- @ModelAttribute  : 커맨드 객체 -> EL 식 변수 추가 
 		
 3) ValidationUtils : 필수 항목 검증을 쉽게 할 수 있는 정적 메서드 정의 
-	rejectIfEmpty(...) : 항목이 null 
-	rejectIfEmptyOrWhitespace(...) : 항목이 null 이거나 공백만 포함 하는지
+	rejectIfEmpty(...) : 항목이 null  ⭐
+	rejectIfEmptyOrWhitespace(...) : 항목이 null 이거나 공백만 포함 하는지 ⭐⭐
 	
 3. 에러 코드에 해당하는 메시지 코드를 찾는 규칙
 - 에러코드 + "." + 커맨드객체이름 + "." + 필드명
@@ -76,8 +78,13 @@ protected void InitBinder(WebDataBinder binder) {
 }
 	
 3) 컨트롤러 범위 Validator  > 글로벌 범위 Validator
+WebMvcConfigurer
+	getValidalor() : 전역 Validator 설정
+	-> @Valid 애노테이션을 커맨드 객체 앞에 
 
-6. Bean Validation
+6. Bean Validation API	⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+- jakarta.validation 패키지
++ Hibernate Validator
 
 
 1) 설정
