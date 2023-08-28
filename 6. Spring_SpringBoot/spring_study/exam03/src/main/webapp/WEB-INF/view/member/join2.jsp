@@ -32,6 +32,7 @@
         </dt>
         <dd>
             <form:input path="userId" cssClass="on" cssStyle="border: 1px solid red;" />
+            <form:errors path="userId" element="div" />
         </dd>
     </dl>
     <dl>

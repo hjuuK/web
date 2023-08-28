@@ -27,5 +27,17 @@ public class JoinValidator implements Validator {
         if (userId == null || userId.isBlank()) {
             errors.rejectValue("userId", "required", "아이디를 입력하세요.");
         }
+
+        if (userPw == null || userPw.isBlank()) {
+            errors.rejectValue("userPw", "required", "비밀번호를 입력하세요.");
+        }
+
+        if (userPwRe == null || userPwRe.isBlank()) {
+            errors.rejectValue("userPwRe", "required", "비밀번호를 확인하세요.");
+        }
+
+        if (userNm == null || userNm.isBlank()) {
+            errors.rejectValue("userNm", "required", "회원명을 입력하세요.");
+        }
     }
 }
