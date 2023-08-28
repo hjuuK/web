@@ -32,7 +32,7 @@ public class MemberJoinController {
 //        List<Item> types = getMemberTypes();
 //        model.addAttribute("types", types);
 
-        commonProcess(model);
+        //commonProcess(model);
 
         return "member/join2";
     }
@@ -49,9 +49,8 @@ public class MemberJoinController {
 //        List<Item> types = getMemberTypes();
 //        model.addAttribute("types", types);   => commonProcess로 옮김
 
-        commonProcess(model);
-
-        //joinValidator.validate(form, errors);
+        //commonProcess(model);
+        joinValidator.validate(form, errors);
 
         if (errors.hasErrors()) { // reject, rejectValue -> true
             return "member/join2";

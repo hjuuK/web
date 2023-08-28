@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.*;
 import java.util.List;
 
-@Repository
+@Repository // 기본 스캔 범위 대상 (의존성 자동)
 @RequiredArgsConstructor
 //@Transactional
 public class MemberDao {
@@ -75,6 +75,13 @@ public class MemberDao {
         String sql = "SELECT COUNT(*) FROM member";
         long total = jdbcTemplate.queryForObject(sql, long.class);
         return total; // 전체 갯수
+    }
+
+    public boolean exists(String userId) { // userid로 존재 여부 체크
+        String sql = "SELECT COUNT(*) FROM member WHERE uerId = ?";
+        int cnt = jdbcTemplate.queryForObject(sql, int.class, userId);
+
+        return cnt > 0;
     }
 
     private Member mapper(ResultSet rs, int i) throws SQLException {
