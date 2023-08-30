@@ -1,6 +1,12 @@
 스프링 웹 MVC
 1. 날짜 값 변환
-2. @PathVariable
+@DateTimeFormat
+	- pattern
+	
+에러코드 : typeMismatch
+
+2. @PathVariable : 경로 변수
+
 3. 익셉션 처리
 @ExceptionHandler 
 @ControllerAdvice
