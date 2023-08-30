@@ -1,0 +1,16 @@
+스프링 파일 업로드(MultipartFile)
+
+1. multipart 
+2. 설정
+<multipart-config>
+    <max-file-size>20971520</max-file-size> <!--  1MB * 20 -->
+    <max-request-size>41943040</max-request-size> <!-- 40MB -->
+</multipart-config>
+3. MultipartFile
+
+
+프로필과 프로퍼티 파일
+1. @Profile
+
+2. PropertySourcesPlaceholderConfigurer
+3. @Value
