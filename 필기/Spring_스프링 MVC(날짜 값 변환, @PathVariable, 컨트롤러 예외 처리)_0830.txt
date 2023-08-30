@@ -9,4 +9,11 @@
 
 3. 익셉션 처리
 @ExceptionHandler 
+	- 요청 메서드의 주입 가능한 객체
+	1) 발생한 예외 객체
+	2) Model
+	3) HttpServletRequest		// 오류 발생했을 때 페이지 이동
+	4) HttpservletResponse	// 발생한 오류를 알기 위한 응답코드 ex) 404, 200, 500 ...
+	5) HttpSession
+	
 @ControllerAdvice

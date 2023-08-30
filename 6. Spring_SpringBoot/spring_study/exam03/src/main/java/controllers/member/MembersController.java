@@ -2,6 +2,7 @@ package controllers.member;
 
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +21,9 @@ public class MembersController {
 
         boolean result = false;
         if (!result) {
-            throw new RuntimeException("예외 발생...!!!");
+            throw new RuntimeException("⭐예외 발생...!!!");
         }
 
         return "member/info";
-    }
-
-    @ExceptionHandler(RuntimeException.class)
-    public String errorHandler() {
-        return "error/common";
     }
 }
