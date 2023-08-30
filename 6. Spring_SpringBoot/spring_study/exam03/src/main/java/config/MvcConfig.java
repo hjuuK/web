@@ -1,6 +1,7 @@
 package config;
 
 import config.interceptors.MemberOnlyInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,9 @@ import org.springframework.web.servlet.config.annotation.*;
 @EnableWebMvc
 @Import(DbConfig.class)
 public class MvcConfig implements WebMvcConfigurer {
+    @Value("${file.upload.path}")
+    private String uploadPath;
+
 /*
     @Autowired
     private JoinValidator joinValidator;
@@ -56,6 +60,9 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/");
+
+        registry.addResourceHandler("/upload/**")
+                .addResourceLocations("file:///" + uploadPath); // 슬래시 두개가 맞지만 하나가 제거되기 때문에 3개 써야됨
     }
 
     @Override
