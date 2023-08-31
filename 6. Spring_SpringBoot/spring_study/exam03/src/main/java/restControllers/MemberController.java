@@ -1,5 +1,6 @@
 package restControllers;
 
+import commons.CommonException;
 import controllers.member.JoinForm;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -71,7 +72,7 @@ public class MemberController {
             throw new RuntimeException(messages);  // error
         }
 
-        joinService.join(form);
+        joinService.join(form); // DuplicateMemberException -> CommonException
 
         return ResponseEntity.created(URI.create("/member/login")).build();     // 정상
     }
@@ -82,11 +83,17 @@ public class MemberController {
 //                .status(HttpStatus.BAD_REQUEST)
 //                .body(new String[] {e.getMessage()}); // ResponseEntity<Object>
 
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        if (e instanceof CommonException) {
+            CommonException commonException = (CommonException)e;
+            status = commonException.getStatus();
+        }
+
         JSONData<Object> data = new JSONData<>();
         data.setSuccess(false);
         data.setMessage(e.getMessage());
-        data.setStatus(HttpStatus.BAD_REQUEST);
+        data.setStatus(status);
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(data);
+        return ResponseEntity.status(status).body(data);
     }
 }
