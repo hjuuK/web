@@ -40,4 +40,6 @@ JSON 응답과 요청 처리
 3) build() : 바디 출력 X
 
 9. @ExceptionHandler
+	- JSON 응답으로 오류 페이지 공통으로 처리
+
 10. @RestControllerAdvice

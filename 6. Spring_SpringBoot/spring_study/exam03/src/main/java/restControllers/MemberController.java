@@ -1,8 +1,10 @@
 package restControllers;
 
 import controllers.member.JoinForm;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import models.member.DuplicateMemberException;
 import models.member.JoinService;
 import models.member.Member;
 import models.member.MemberDao;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/member")
@@ -48,7 +51,7 @@ public class MemberController {
     }
 
     /*
-    @GetMapping("/register")
+    @postMapping("/register")
     public ResponseEntity<Object> register(@RequestBody JoinForm form) { // 요청 데이터를 해석해서 넣어줌
         joinService.join(form);
 
@@ -61,15 +64,22 @@ public class MemberController {
      */
 
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody @Valid JoinForm form, Errors errors) {
+    public ResponseEntity<Object> register(@RequestBody @Valid JoinForm form, Errors errors, HttpServletResponse response) {
         if (errors.hasErrors()) {
-            List<String> messages = errors.getAllErrors().stream().map(o -> o.getCode()).toList();
+            String messages = errors.getAllErrors().stream().map(o -> o.getDefaultMessage()).collect(Collectors.joining());
             
-            return ResponseEntity.badRequest().body(messages);  // error
+            throw new RuntimeException(messages);  // error
         }
-        
+
         joinService.join(form);
-        
+
         return ResponseEntity.created(URI.create("/member/login")).build();     // 정상
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> errorHandler(Exception e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new String[] {e.getMessage()});
     }
 }
