@@ -77,9 +77,16 @@ public class MemberController {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> errorHandler(Exception e) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(new String[] {e.getMessage()});
+    public ResponseEntity<JSONData<Object>> errorHandler(Exception e) {
+//        return ResponseEntity
+//                .status(HttpStatus.BAD_REQUEST)
+//                .body(new String[] {e.getMessage()}); // ResponseEntity<Object>
+
+        JSONData<Object> data = new JSONData<>();
+        data.setSuccess(false);
+        data.setMessage(e.getMessage());
+        data.setStatus(HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(data);
     }
 }
