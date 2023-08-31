@@ -30,8 +30,15 @@ public class MemberController {
         return members;
     }
 
+    /*
     @GetMapping("/hello")
     public String hello() {
-        return "안녕하세요.";
+        return "Hello!!";
+    }
+     */
+
+    @GetMapping("/hello")
+    public void hello() {
+        System.out.println("Hello!!!!");
     }
 }
