@@ -1,0 +1,22 @@
+JSON 응답과 요청 처리
+1. JSON이란?
+1) JSON(JavaScript Object Notation) : 자바스크립트 객체 표기법
+{"이름1" : "값1", "이름2" : "값2" ...}
+
+2. Jackson 의존 설정
+	1) jackson-databind
+	2) jackson-datatype-jsr310
+		JSR310 : Data & Time API
+	
+3. @RestController
+4. @ResponstBody
+5. @Jsonlgnore
+6. @JsonFormat
+7. @RequestBody
+8. ResponseEntity
+1) status(...)
+2) body(...)
+3) build()
+
+9. @ExceptionHandler
+10. @RestControllerAdvice

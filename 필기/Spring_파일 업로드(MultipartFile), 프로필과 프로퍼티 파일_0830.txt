@@ -1,16 +1,41 @@
 스프링 파일 업로드(MultipartFile)
 
 1. multipart 
+
 2. 설정
+web.xml
 <multipart-config>
     <max-file-size>20971520</max-file-size> <!--  1MB * 20 -->
     <max-request-size>41943040</max-request-size> <!-- 40MB -->
 </multipart-config>
+
+1kb -> 1024 byte
+1mb -> 1024 kbyte
+
+1024 * 1024 * 20 -> 20mb
+
 3. MultipartFile
 
 
 프로필과 프로퍼티 파일
 1. @Profile
+	- 설정 관리 빈을 분리
+	- spring.profiles.active=프로필명
 
 2. PropertySourcesPlaceholderConfigurer
+	-> static 메서드로 정의
+	-> @Bean
+	
 3. @Value
+
+	@Value("${설정이름}")
+
+
+
+spring.profiles.active : properties 파일 방식의 설정
+
+
+yml 파일 방식의 설정
+spring
+	profiles
+		active=dev
