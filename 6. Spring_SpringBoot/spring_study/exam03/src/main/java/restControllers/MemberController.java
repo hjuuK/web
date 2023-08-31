@@ -1,5 +1,6 @@
 package restControllers;
 
+import controllers.member.JoinForm;
 import lombok.RequiredArgsConstructor;
 import models.member.Member;
 import models.member.MemberDao;
@@ -40,5 +41,10 @@ public class MemberController {
     @GetMapping("/hello")
     public void hello() {
         System.out.println("Hello!!!!");
+    }
+
+    @GetMapping("/register")
+    public void register(JoinForm form) {
+        System.out.println(form);
     }
 }
