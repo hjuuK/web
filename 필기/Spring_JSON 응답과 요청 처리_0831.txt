@@ -23,11 +23,21 @@ JSON 응답과 요청 처리
 	- JSON 변환 배제
 
 6. @JsonFormat
+	- 날짜의 형식화
+	- Pattern=""
+
 7. @RequestBody
+	- 요청 데이터를 JSON 형식으로 인식할 수 있도록 알려주는 애노테이션
+	- Content-Type : application/json
+
+참고)
+	ARC(Advanced Rest Client)
+	
 8. ResponseEntity
-1) status(...)
-2) body(...)
-3) build()
+	- 응답 상태 코드 + 응답 바디에 대한 상세한 통제
+1) status(...) : 응답 상태 코드
+2) body(...) : 바디에 출력 데이터
+3) build() : 바디 출력 X
 
 9. @ExceptionHandler
 10. @RestControllerAdvice
