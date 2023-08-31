@@ -4,13 +4,24 @@ JSON 응답과 요청 처리
 {"이름1" : "값1", "이름2" : "값2" ...}
 
 2. Jackson 의존 설정
-	1) jackson-databind
-	2) jackson-datatype-jsr310
-		JSR310 : Data & Time API
+	1) jackson-databind		// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.15.2
+	2) jackson-datatype-jsr310		// https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.15.2
+		JSR310 : Date & Time API (java.time 패키지)
 	
-3. @RestController
-4. @ResponstBody
+3. @RestController 
+1) 스프링5에서 추가
+2) 기존 컨트롤러와 다른 점, 반환값이 객체
+	-> getter를 호출 -> JSON 출력
+3) 문자열 반환 -> 문자열 출력
+4) 반환값(void) -> 응답 바디 X
+
+4. @ResponstBody 
+1) 스프링4까지는 자주 사용된 애노테이션
+2) 일반 컨트롤러(@Controller)에서 JSON 요청과 응답을 처리
+
 5. @Jsonlgnore
+	- JSON 변환 배제
+
 6. @JsonFormat
 7. @RequestBody
 8. ResponseEntity

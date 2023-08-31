@@ -1,5 +1,6 @@
 package models.member;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 public class Member {
     private long userNo;
     private String userId;
+
+    @JsonIgnore // JSON 변환 배제 -> 제외하고 출력
     private String userPw;
     private String userNm;
     private LocalDateTime regDt;
