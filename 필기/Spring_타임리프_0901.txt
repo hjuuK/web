@@ -59,7 +59,7 @@
 		- index : 0부터 시작하는 순서 
 		- count : 1부터 시작하는 순서
 		- last, first : 처음, 마지막 
-		- odd(홀수), even(짝수)
+		- odd(홀수), even(짝수)  // if가 참일때만 출력
 	참고)
 		JSTL:
 		<c:forEach varStatus="status"
