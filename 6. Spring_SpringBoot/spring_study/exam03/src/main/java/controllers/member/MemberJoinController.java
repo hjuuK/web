@@ -34,6 +34,13 @@ public class MemberJoinController {
 
         //commonProcess(model);
 
+        String[] addCss = {"member/join1", "member/join2"};
+        List<String> addScript = Arrays.asList("member/joinjs1", "member/joinjs2");
+        model.addAttribute("addCss", addCss);
+        model.addAttribute("addScript", addScript);
+
+        model.addAttribute("pageTitle", "회원가입");
+
         return "member/join";
     }
 
