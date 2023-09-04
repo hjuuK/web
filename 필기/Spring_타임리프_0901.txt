@@ -79,12 +79,20 @@
 9. th:classappend ⭐⭐⭐⭐⭐⭐
 	- 특정 조건하에서 클래스 속성을 추가하고 제거
 
-스프링 MVC 폼과 에러 메시지 연동
-1. #fields.errors(..)
-2. #fields.globalErrors(..)
+스프링 MVC 폼과 에러 메시지 연동	⭐⭐⭐⭐⭐⭐
+1. #fields.errors(..) : 배열  : errors.rejectValue(필드명, 에러코드) - 필드 오류
+		// <div th:each="err : ${#}fields.errors('userId')}" th:text="${err}"></div>
+2. #fields.globalErrors()  : errors.reject(에러코드) - 커맨드 객체 자체 오류
+	= #fields.errors('global');		
+		// <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+
 
 
 th:field
+
+
+참고)
+<form:errors path="필드명" />
 
 
 타임리프 페이지 레이아웃
@@ -99,3 +107,6 @@ th:fragment
 1) 변수식 ${...}
 2) 메세지식 #{메세지코드}
 3) URL 식 @{URL}
+4) 선택 변수식
+	th:object="${...}"
+	*{...}
