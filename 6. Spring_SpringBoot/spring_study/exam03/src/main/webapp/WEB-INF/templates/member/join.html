@@ -5,6 +5,7 @@
     <title>회원가입</title>
 </head>
 <body>
+    <header th:replace="~{outlines/header::common}"></header>
     <h1>회원가입</h1>
     <form method="post" th:action="@{/member/join}" th:object="${joinForm}">
         <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
@@ -57,5 +58,6 @@
         </div>
         <button type="submit" th:text="#{join}"></button>
     </form>
+    <footer th:replace="~{outlines/footer::common}"></footer>
 </body>
 </html>
