@@ -76,12 +76,15 @@
 
 8. th:object : 선택 변수식 
  
-9. th:classappend 
+9. th:classappend ⭐⭐⭐⭐⭐⭐
 	- 특정 조건하에서 클래스 속성을 추가하고 제거
 
 스프링 MVC 폼과 에러 메시지 연동
 1. #fields.errors(..)
 2. #fields.globalErrors(..)
+
+
+th:field
 
 
 타임리프 페이지 레이아웃
@@ -90,3 +93,9 @@ th:replace
 	
 th:fragment
 	- 치환될 부분 HTML이 정의된 영역 
+	
+	
+----------------------------------------
+1) 변수식 ${...}
+2) 메세지식 #{메세지코드}
+3) URL 식 @{URL}
