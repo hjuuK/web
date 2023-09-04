@@ -34,7 +34,7 @@ public class MemberJoinController {
 
         //commonProcess(model);
 
-        return "member/join2";
+        return "member/join";
     }
 
     @PostMapping
@@ -53,7 +53,7 @@ public class MemberJoinController {
         joinValidator.validate(form, errors);
 
         if (errors.hasErrors()) { // reject, rejectValue -> true
-            return "member/join2";
+            return "member/join";
         }
 
         return "redirect:/member/login"; // redirect:/ 키워드만 입력

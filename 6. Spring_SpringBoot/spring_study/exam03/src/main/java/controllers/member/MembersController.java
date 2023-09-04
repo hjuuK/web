@@ -15,29 +15,41 @@ import java.util.List;
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MembersController {
+
     private final MemberDao memberDao;
 
-    @GetMapping
-    public String list(@ModelAttribute @Valid SearchForm form, Errors errors) {  // 날짜를 통한 회원목록 조회
-
+    @GetMapping("/list")
+    public String list2(Model model) {
+        List<Member> members = memberDao.getList();
+        model.addAttribute("members", members);
+        model.addAttribute("menuCode", "member");
         return "member/list";
     }
 
-    @GetMapping("/info/{userId}")
-    public String info(@PathVariable("id") String userId) {
-        System.out.println("userId : " + userId);
+    @GetMapping
+    public String list(@ModelAttribute @Valid SearchForm form, Errors errors) {
+        System.out.println(form);
+        return "member/list";
+    }
 
-        boolean result = false;
-        if (!result) {
-            throw new RuntimeException("⭐예외 발생...!!!");
-        }
+    @GetMapping("/info/{id}")
+    public String info(@PathVariable("id") String userId, Model model) {
 
+        Member member = memberDao.get(userId);
+        model.addAttribute("member", member);
+        model.addAttribute("title", "<h1>제목</h1>");
+        /**
+         boolean result = false;
+         if (!result) {
+         throw new RuntimeException("★예외 발생.....!!!");
+         }
+         */
         return "member/info";
     }
 
     @ResponseBody
     @GetMapping("/members2")
-    public List<Member> member2() {
+    public List<Member> members2() {
         List<Member> members = memberDao.getList();
 
         return members;
