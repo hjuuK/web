@@ -1,3 +1,16 @@
 스프링부트 
 
 1. 설정 및 소개
+
+spring.profiles.active=프로필명 // 배포할때는 이런식으로 바꿔서 주로 실행
+
+application.properties : 기본 설정파일
+application-prod.properties : 프로필 명이 prod인 설정 파일
+
+mvn clean package : 배포 파일 생성 -> jar파일로 생성됨
+
+
+java -jar jar파일  // 기본 설정 파일이 동작하게 됨 // cmd에서 실행
+
+java -jar =Dspring.profiles.active=prod 배포파일.jar
+-> application-prod.properties 로 인식
