@@ -1,0 +1,13 @@
+Spring Data : 추상화(공통)
+Spring Data JPA
+
+1. JPA란?
+1) JPA(Jave Persistence API')는 자바 ORM 기술에 대한 API 표준입니다.
+2) ORM이란 'Objea Relational Mapping'의 약자로 객체와 관계형 데이터베이스를 매핑해주는 것을 말합니다.
+
+2. 영속성 컨텍스트
+Persistence - 영속성 컨텍스트
+
+
+-----------------------------
+H2 DataBase : 연습용 DB
