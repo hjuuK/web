@@ -12,5 +12,15 @@ mvn clean package : 배포 파일 생성 -> jar파일로 생성됨
 
 java -jar jar파일  // 기본 설정 파일이 동작하게 됨 // cmd에서 실행
 
-java -jar =Dspring.profiles.active=prod 배포파일.jar
+java -jar -Dspring.profiles.active=prod 배포파일.jar
 -> application-prod.properties 로 인식
+
+
+Spring Data JPA
+- JPA(Jave Persistence API) : 자바 ORM 기술에 대한 표준 API
+
+Spring Security
+
+
+
+WebMvcConfigurer ⭐⭐⭐ 매우 중요한 설정 인터페이스
