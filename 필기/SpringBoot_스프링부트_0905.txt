@@ -18,6 +18,7 @@ java -jar -Dspring.profiles.active=prod 배포파일.jar
 
 Spring Data JPA
 - JPA(Jave Persistence API) : 자바 ORM 기술에 대한 표준 API
+- ORM이란 'Objea Relational Mapping'의 약자로 객체와 관계형 데이터베이스를 매핑해주는 것
 
 Spring Security
 

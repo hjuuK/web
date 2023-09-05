@@ -5,7 +5,7 @@ Spring Data JPA
 1) JPA(Jave Persistence API')는 자바 ORM 기술에 대한 API 표준입니다.
 2) ORM이란 'Objea Relational Mapping'의 약자로 객체와 관계형 데이터베이스를 매핑해주는 것을 말합니다.
 
-2. 영속성 컨텍스트
+2. 영속성 컨텍스트 : 변화 감지 메모리	// 캐시 역할도 함
 Persistence  - 영속성 컨텍스트 
 - 상태변화 감지 메모리 영역 
 - 처음 추가된 상태 -> INSERT 쿼리 
