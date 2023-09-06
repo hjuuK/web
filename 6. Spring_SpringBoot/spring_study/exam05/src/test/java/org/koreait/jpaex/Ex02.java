@@ -25,7 +25,7 @@ public class Ex02 {
                 .userId("user01")
                 .userPw("123456")
                 .userNm("사용자01")
-                .regDt(LocalDateTime.now())
+                //.regDt(LocalDateTime.now())
                 .build();
 
         em.persist(member); // 영속성 안에 존재
