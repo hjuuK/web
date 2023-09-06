@@ -8,8 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 @SpringBootTest
 @Transactional
 @TestPropertySource(locations="classpath:application-test.properties")
@@ -28,6 +26,7 @@ public class Ex03 {
         em.flush();
 
         System.out.println(member);
+        System.out.printf("regDt : %s, modDt : %s%n", member.getRegDt(), member.getModDt());
 
         try {
             Thread.sleep(3000);
@@ -37,5 +36,6 @@ public class Ex03 {
         em.flush();
 
         System.out.println(member);
+        System.out.printf("regDt : %s, modDt : %s%n", member.getRegDt(), member.getModDt());
     }
 }
