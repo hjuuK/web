@@ -35,5 +35,7 @@ public class Ex03 {
 
         member.setUserNm("(수정)사용자01");
         em.flush();
+
+        System.out.println(member);
     }
 }
