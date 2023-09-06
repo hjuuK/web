@@ -1,5 +1,6 @@
 package org.koreait.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -16,9 +17,11 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity { // 공통적인 자원으로 공유 목적 => 추상 클래스
     //@CreationTimestamp // 추가일자 => 쿼리시 실행
     @CreatedDate // 엔티티가 처음 추가 되면 생성
+    @Column(updatable = false) // 수정이 안되게 막기
     private LocalDateTime regDt;
 
     //@UpdateTimestamp // 수정일자 => 쿼리시 실행
     @LastModifiedDate // 변화에 대한 데이터 감지를 위한 @EntityListeners와 같이 씀
+    @Column(insertable = false) // 추가할 때 값 안들어가게 막기
     private LocalDateTime modDt;
 }
