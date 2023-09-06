@@ -23,11 +23,17 @@ public class Ex03 {
                 .userId("user01")
                 .userPw("123456")
                 .userNm("사용자01")
-                .regDt(LocalDateTime.now())
                 .build();
         em.persist(member);
         em.flush();
 
         System.out.println(member);
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {}
+
+        member.setUserNm("(수정)사용자01");
+        em.flush();
     }
 }
