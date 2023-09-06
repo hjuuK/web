@@ -41,4 +41,10 @@ public class Ex04 {
         List<Member> members = repository.findAll();
         members.stream().forEach(System.out::println);
     }
+
+    @Test
+    void test2() {
+        Member member = repository.findById(1L).orElse(null);
+        System.out.println(member);
+    }
 }
