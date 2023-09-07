@@ -109,6 +109,13 @@ BooleanBuilder --> Predicate 인터페이스의 구현체
 
 8. 연관 관계 매핑
 1) @ManyToOne
+	- 다대일
+	- 게시글(Many) - 회원(One)
+	- Many쪽 테이블(엔티티)에 외래키가 등록
+	
+	- 외래키 : 엔티티명+기본키
+	@JoinColumn(name="외래키명")
+	
 2) @OneToMany
 3) @OneToOne
 4) @ManyToMany
