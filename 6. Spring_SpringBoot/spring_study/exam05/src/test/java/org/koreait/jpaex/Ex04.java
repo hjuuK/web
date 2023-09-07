@@ -102,4 +102,5 @@ public class Ex04 {
         List<Member> members = repository.getList2("용", "ser");
         members.stream().forEach(System.out::println);
     }
+
 }
