@@ -1,6 +1,9 @@
 package org.koreait.jpaex;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.koreait.constants.Role;
 import org.koreait.entities.BoardData;
 import org.koreait.entities.Member;
@@ -8,6 +11,7 @@ import org.koreait.repositories.BoardDataRepository;
 import org.koreait.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -15,7 +19,11 @@ import java.util.List;
 
 @SpringBootTest
 @Transactional
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class Ex05 {
+    @PersistenceContext
+    private EntityManager em;
+
     @Autowired
     private MemberRepository memberRepository;
 
@@ -44,5 +52,11 @@ public class Ex05 {
         }
 
         boardDataRepository.saveAllAndFlush(items);
+    }
+
+    @Test
+    void test1() {
+        BoardData data = boardDataRepository.findById(1L).orElse(null);
+        System.out.println(data);
     }
 }
