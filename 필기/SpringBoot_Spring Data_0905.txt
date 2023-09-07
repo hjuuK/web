@@ -119,14 +119,27 @@ BooleanBuilder --> Predicate 인터페이스의 구현체
 2) @OneToMany  // 회원쪽에서 본인이 작성한 게시글만 조회
 	- 일대다
 	- 회원(One) - 게시글(Many)
+	- 연관 관계의 주인을 명시 (mappedBy)
 	
 	연관 관계의 주인을 명시해야 함
 		- Many쪽이 관계의 주인
 		- 외래키가 있는 쪽
 		- 데이터 수정, 변경 가능
 
-3) @OneToOne
-4) @ManyToMany
+
+참고)
+	lombok : toString()
+		-> 멤버 변수의 출력 getter 메서드를 호출을 통해 출력
+		
+		BoardData::toString() -> getMember() -> Member::toString() -> getBoardData() -> getMember() -> Member::toString() -> getBoardData() -> ...
+		// 순환 참조 발생 => .StackOverflowError
+		
+		해결 방법 : 
+		1) toString 메서드를 getter를 이용 X, 직접 멤버 변수로 정의  -> 근본의 방법 / 근데 귀찮,,
+		2) @ToString.Exclude : 순환참조가 발생하는 필드에 적용
+
+3) @OneToOne : 1:1매핑
+4) @ManyToMany : 다대다매핑
 
 9. 영속성 전이
 

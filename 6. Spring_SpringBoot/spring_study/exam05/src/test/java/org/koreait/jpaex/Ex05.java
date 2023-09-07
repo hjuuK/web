@@ -42,7 +42,7 @@ public class Ex05 {
         memberRepository.saveAndFlush(member);
 
         List<BoardData> items = new ArrayList<>();
-        for (int i = 0; i<= 10; i++) {
+        for (int i = 1; i<= 10; i++) {
             BoardData item = BoardData.builder()
                     .subject("제목" + i)
                     .content("내용" + i)
@@ -61,5 +61,12 @@ public class Ex05 {
         System.out.println(data);
         Member member = data.getMember();
         System.out.println(member);
+    }
+
+    @Test
+    void test2() {
+        Member member = memberRepository.findById(1L).orElse(null);
+        List<BoardData> items = member.getBoardDatas();
+        items.stream().forEach(System.out::println);
     }
 }
