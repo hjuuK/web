@@ -114,9 +114,17 @@ BooleanBuilder --> Predicate 인터페이스의 구현체
 	- Many쪽 테이블(엔티티)에 외래키가 등록
 	
 	- 외래키 : 엔티티명+기본키
-	@JoinColumn(name="외래키명")
+	@JoinColumn(name="외래키명") -> 외래키명 설정
 	
-2) @OneToMany
+2) @OneToMany  // 회원쪽에서 본인이 작성한 게시글만 조회
+	- 일대다
+	- 회원(One) - 게시글(Many)
+	
+	연관 관계의 주인을 명시해야 함
+		- Many쪽이 관계의 주인
+		- 외래키가 있는 쪽
+		- 데이터 수정, 변경 가능
+
 3) @OneToOne
 4) @ManyToMany
 

@@ -52,11 +52,14 @@ public class Ex05 {
         }
 
         boardDataRepository.saveAllAndFlush(items);
+        em.clear(); // 쿼리 비우기
     }
 
     @Test
     void test1() {
         BoardData data = boardDataRepository.findById(1L).orElse(null);
         System.out.println(data);
+        Member member = data.getMember();
+        System.out.println(member);
     }
 }

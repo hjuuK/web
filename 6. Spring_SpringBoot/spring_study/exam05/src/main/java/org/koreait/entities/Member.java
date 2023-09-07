@@ -1,13 +1,14 @@
 package org.koreait.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.koreait.constants.Role;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="es_member")  // 명칭하는대로 테이블 만들기
@@ -33,6 +34,9 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING) // ENUM 함수 // ORDINAL을 쓰면 추가할때 순번이 바뀌는 불상사가 일어날 수도 있기 때문에 거의 사용 X
     private Role role;
+
+    @OneToMany(mappedBy = "member") // 연관 관계의 주인을 명시해야 함 / 외래키가 있는 쪽 -> 주인(BoardData::Member)
+    private List<BoardData> boardDatas = new ArrayList<>();
 
     /*
     @Temporal(TemporalType.TIME)    // TIME : 시간만, TIMESTAMP : 날짜와 시간
