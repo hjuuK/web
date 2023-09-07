@@ -63,19 +63,25 @@ JPQL  : Java Persistence Query Language
 4. Repository 설계하기
 JpaRepository 인터페이스를 상속 -> 구현 객체가 자동 생성
 
-S findOne(...)
+Optional<S> findById(...)
 List<S> findAll(...)
 S save(S entity) : EntityManager::persist(...)
 S saveAndFlush(S entity) : -> save() + flush()
+List<S> saveAll(Collection<S> entity) : 
+List<S> saveAllAndFlush(Collection<S> entity)
 void delete(S entity) : EntityManager::remove(...)
 long count(...)
 void flush()
 
 5. 쿼리 메서드
+	
+Pageable 인터페이스
+	-> PageRequest 
 
 6. @Query 애노테이션
 
 7. Querydsl
+s
 
 8. 연관 관계 매핑
 1) @ManyToOne
