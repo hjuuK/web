@@ -80,8 +80,26 @@ Pageable 인터페이스
 
 6. @Query 애노테이션
 
-7. Querydsl
-s
+7. Querydsl		// SELECT 문에 특화
+- : 비표준
+- 조회 쿼리 관련 쿼리빌딩 라이브러리 제공
+- Querydsl JPA 	// https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa/5.0.0
+- Querydsl APT	// https://mvnrepository.com/artifact/com.querydsl/querydsl-apt/5.0.0
+	- Q엔티티명.java : 자동 생성 클래스
+-------------------------------------------
+<dependency>
+	<groupId>com.querydsl</groupId>
+	<artifactId>querydsl-jpa</artifactId>
+	<version>5.0.0</version>
+	<classifier>jakarta</classifier>
+</dependency>
+<dependency>
+	<groupId>com.querydsl</groupId>
+	<artifactId>querydsl-apt</artifactId>
+	<version>5.0.0</version>
+	<classifier>jakarta</classifier>
+</dependency>
+-------------------------------------------
 
 8. 연관 관계 매핑
 1) @ManyToOne
