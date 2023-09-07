@@ -96,4 +96,10 @@ public class Ex04 {
         List<Member> members = repository.getList("용", "ser");
         members.stream().forEach(System.out::println);
     }
+
+    @Test
+    void test8() {
+        List<Member> members = repository.getList2("용", "ser");
+        members.stream().forEach(System.out::println);
+    }
 }

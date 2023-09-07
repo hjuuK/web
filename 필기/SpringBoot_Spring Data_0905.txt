@@ -91,15 +91,21 @@ Pageable 인터페이스
 	<groupId>com.querydsl</groupId>
 	<artifactId>querydsl-jpa</artifactId>
 	<version>5.0.0</version>
-	<classifier>jakarta</classifier>
+	<classifier>jakarta</classifier>	// 추가
 </dependency>
 <dependency>
 	<groupId>com.querydsl</groupId>
 	<artifactId>querydsl-apt</artifactId>
 	<version>5.0.0</version>
-	<classifier>jakarta</classifier>
+	<classifier>jakarta</classifier>	// 추가
 </dependency>
 -------------------------------------------
+
+논리 연산자
+BooleanBuilder --> Predicate 인터페이스의 구현체
+	and(Predicate ...)
+	or(Predicate ...)
+	not(Predicate ...)
 
 8. 연관 관계 매핑
 1) @ManyToOne
