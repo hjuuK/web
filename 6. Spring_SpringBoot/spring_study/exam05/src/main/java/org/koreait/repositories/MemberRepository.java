@@ -4,11 +4,13 @@ import org.koreait.entities.Member;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MemberRepository extends JpaRepository<Member, Long> { // JpaRepository<Entity, 기본키>
+public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslPredicateExecutor<Member> { // JpaRepository<Entity, 기본키>
+
     Member findByUserId(String userId); // 구현체 생성 -> 외부에서 메소드엿던 구현 내용이 바로 추가
 
     List<Member> findByUserNmContaining(String keyword, Pageable pageAble); // like %키워드%
