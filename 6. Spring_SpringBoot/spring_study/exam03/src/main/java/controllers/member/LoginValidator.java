@@ -39,10 +39,12 @@ public class LoginValidator implements Validator {
             errors.rejectValue("userId", "login.validation.fail");
         }
 
-        String hash = member.getUserPw();
-        boolean match = BCrypt.checkpw(userPw, hash);
-        if (!match) {
-            errors.rejectValue("userPw", "login.validation.fail");
+        if (member != null) {
+            String hash = member.getUserPw();
+            boolean match = BCrypt.checkpw(userPw, hash);
+            if (!match) {
+                errors.rejectValue("userPw", "login.validation.fail");
+            }
         }
     }
 }
