@@ -42,4 +42,8 @@ public class Member extends BaseEntity {
     @Temporal(TemporalType.TIME)    // TIME : 시간만, TIMESTAMP : 날짜와 시간
     private Date date;
      */
+
+    @OneToOne   // 일대일
+    @JoinColumn(name="addressId")
+    private Address address;
 }
