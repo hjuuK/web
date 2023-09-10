@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import models.member.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/member/login")
@@ -18,7 +15,11 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping
-    public String login(@ModelAttribute LoginForm loginForm) { // 양식
+    public String login(@ModelAttribute LoginForm loginForm, @CookieValue(name="saveId", required = false) String userId) { // 양식
+        if (userId != null) {
+            loginForm.setSaveId(true);
+            loginForm.setUserId(userId);
+        }
 
         return "/member/login";
     }
