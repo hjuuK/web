@@ -32,7 +32,7 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING) // ENUM 함수 // ORDINAL을 쓰면 추가할때 순번이 바뀌는 불상사가 일어날 수도 있기 때문에 거의 사용 X
     private Role role;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY) // 연관 관계의 주인을 명시해야 함 / 외래키가 있는 쪽 -> 주인(BoardData::Member)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) // 연관 관계의 주인을 명시해야 함 / 외래키가 있는 쪽 -> 주인(BoardData::Member)
     private List<BoardData> boardDatas = new ArrayList<>();
 
     /*
