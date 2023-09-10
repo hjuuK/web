@@ -65,6 +65,8 @@ public class MemberJoinController {
             return "member/join";
         }
 
+        joinService.join(form);
+
         return "redirect:/member/login"; // redirect:/ 키워드만 입력
     }
 

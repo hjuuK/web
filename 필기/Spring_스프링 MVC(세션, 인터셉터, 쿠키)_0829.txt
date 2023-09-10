@@ -17,6 +17,9 @@ HandlerInterceptor 인터페이스
 	- 응답이 완료된 직후 호출 
 	
 
+WebMvcConfigurer
+	void addInterceptors()
+
 Ant 경로 패턴
 1) * 
 2) ? 
@@ -32,4 +35,4 @@ HttpServletRequest
 
 
 참고)
-ModelMapper : 동일한 명칭의 getter, setter 자동 호출  
+ModelMapper : 동일한 명칭의 getter, setter 자동 호출 -> 값을 설정

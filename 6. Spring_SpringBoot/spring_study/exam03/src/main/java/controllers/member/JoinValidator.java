@@ -90,6 +90,8 @@ public class JoinValidator implements Validator {
             if (!mobile.matches(pattern)) { // 휴대전화 번호 형식이 아닌 경우
                 errors.rejectValue("mobile", "format");
             }
+
+            //errors.reject("commonError", "공통 오류 출력!!");
         }
     }
 }

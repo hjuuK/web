@@ -9,6 +9,7 @@
 --%>
 
 <form:form method="POST" action="${action}" modelAttribute="joinForm">
+    <form:errors />
     <dl>
         <dt>
             <spring:message code="member.userId" />
