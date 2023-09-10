@@ -138,8 +138,17 @@ BooleanBuilder --> Predicate 인터페이스의 구현체
 		1) toString 메서드를 getter를 이용 X, 직접 멤버 변수로 정의  -> 근본의 방법 / 근데 귀찮,,
 		2) @ToString.Exclude : 순환참조가 발생하는 필드에 적용
 
-3) @OneToOne : 1:1매핑
-4) @ManyToMany : 다대다매핑
+3) @OneToOne
+	- 일대일 
+	
+4) @ManyToMany
+	- 다대다
+	
+	해시코드 - 게시글
+	
+	코드 - 게시글1, 게시글2, 게시글3
+	
+	게시글 - 코드1, 코드2, 코드3
 
 9. 영속성 전이
 

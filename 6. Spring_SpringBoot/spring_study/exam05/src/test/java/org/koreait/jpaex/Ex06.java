@@ -47,5 +47,16 @@ public class Ex06 {
 
     @Test
     void test1() {
+        Member member = memberRepository.findByUserId("user01");
+        System.out.println(member);
+        Address address = member.getAddress();
+        System.out.println(address);
+    }
+
+    @Test
+    void test2() {
+        Address address = addressRepository.findById(1L).orElse(null);
+        Member member = address.getMember();
+        System.out.println(member);
     }
 }
