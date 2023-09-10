@@ -61,10 +61,18 @@ public class JoinValidator implements Validator {
          * 3. 휴대전화번호(필수 X) -> 입력된 경우는 형식 체크
          */
 
-        String userid = joinForm.getUserId();
+        String userId = joinForm.getUserId();
+        String userPw = joinForm.getUserPw();
+        String userPwRe = joinForm.getUserPwRe();
+
         // 1. 아이디 중복 여부 체크
-        if (memberDao.exists(userid)) {
+        if (memberDao.exists(userId)) {
             errors.rejectValue("userId", "duplicate");
+        }
+
+        // 2. 비번(userPw)과 비번 확인(userPwRe) 일치 여부
+        if (userPw != null && !userPw.isBlank() && userPwRe != null && !userPwRe.isBlank() && !userPw.equals(userPwRe)) {
+            errors.rejectValue("usePwRe", "mismatch");
         }
     }
 }
