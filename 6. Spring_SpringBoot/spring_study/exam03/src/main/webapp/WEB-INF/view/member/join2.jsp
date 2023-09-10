@@ -11,23 +11,6 @@
 <form:form method="POST" action="${action}" modelAttribute="joinForm">
     <dl>
         <dt>
-            <spring:message code="member.type" />
-        </dt>
-        <dd>
-            <%--
-            <form:radiobuttons path="type" items="${types}" itemLabel="label" itemValue="value" />
-            --%>
-            <%--
-            <form:select path="type" items="${types}" itemLabel="label" itemValue="value" />
-            --%>
-            <form:select path="type">
-                <option value="">- 선택하세요 -</option>
-                <form:options items="${types}" itemLabel="label" itemValue="value" />
-            </form:select>
-        </dd>
-    </dl>
-    <dl>
-        <dt>
             <spring:message code="member.userId" />
         </dt>
         <dd>

@@ -3,6 +3,7 @@ package controllers.member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import models.member.JoinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MemberJoinController {
 
     private final JoinValidator joinValidator;
+    private final JoinService joinService;
 
     @GetMapping  // /member/join
     //@RequestMapping(method=RequestMethod.GET, path="/member/join")
