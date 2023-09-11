@@ -4,8 +4,13 @@
 2. 스프링 시큐티리 설정 
 3. 회원가입 구현 
 	1) UserDetails 인터페이스 : DTO
+		- 아이디와 비번에 대한 설정
+		- 회원 탈퇴, 회원 차단, 비밀번호 만료 설정 ... 구현 => true/false로 활용하면 됨
 		
 	2) UserDetailsService 인터페이스 : Service
+	
+	
+	3) PasswordEncoder : 비번의 해시화
 	
 4. 시큐리티를 이용한 회원 인증(로그인) 구현 
 5. 로그인 정보 가져오기
