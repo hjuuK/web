@@ -1,24 +1,35 @@
 package org.koreait.models.member;
 
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@Data @Builder
 public class MemberInfo implements UserDetails {
+    private Long userNo;
+    private String userId;
+    private String userPw;
+    private String userNm;
+    private String email;
+    private String mobile;
+    private Collection<GrantedAuthority> authorities;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {    // 회원에 대한 권한 -> 인가 (접근 제한)
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {   // 비번
-        return null;
+        return userPw;
     }
 
     @Override
     public String getUsername() {   // 아이디
-        return null;
+        return userId;
     }
 
     @Override
