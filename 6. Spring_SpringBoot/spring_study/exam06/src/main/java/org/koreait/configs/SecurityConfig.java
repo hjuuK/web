@@ -16,9 +16,8 @@ public class SecurityConfig {   // localhost:3000 첫 로그인 화면 무력화
         http.formLogin(f -> {
            f.loginPage("/member/login")
                    .usernameParameter("userId")
-                   .passwordParameter("userPw")
-                   .successForwardUrl("/") // 성공하면 이동할 주소
-                   .failureUrl("/member/login"); // 실패하면 이동할 주소
+                   .passwordParameter("userPw");
+
         });
 
         /* 회원 로그아웃 설정 */
