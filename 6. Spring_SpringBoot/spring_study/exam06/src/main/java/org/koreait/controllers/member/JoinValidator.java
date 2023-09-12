@@ -51,6 +51,8 @@ public class JoinValidator implements Validator {
             if (!mobile.matches(pattern)) {
                 errors.rejectValue("mobile", "Mobile");
             }
+
+            form.setMobile(mobile);
         }
     }
 }
