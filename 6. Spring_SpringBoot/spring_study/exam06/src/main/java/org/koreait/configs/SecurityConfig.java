@@ -21,7 +21,6 @@ public class SecurityConfig {   // localhost:3000 첫 로그인 화면 무력화
                    .passwordParameter("userPw")
                    .successHandler(new LoginSuccessHandler())
                    .failureHandler(new LoginFailureHandler());
-
         });
 
         /* 회원 로그아웃 설정 */
