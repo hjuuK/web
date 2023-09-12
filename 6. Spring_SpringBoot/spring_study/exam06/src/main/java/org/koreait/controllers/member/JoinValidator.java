@@ -38,5 +38,19 @@ public class JoinValidator implements Validator {
         if (userPw != null && !userPw.isBlank() && userPwRe != null && !userPwRe.isBlank() && !userPw.equals(userPwRe)) {
             errors.rejectValue("userPwRe", "mismatch");
         }
+
+        // 3. 휴대전화번호 -> 형식 체크
+        String mobile = form.getMobile();
+        if (mobile != null && !mobile.isBlank()) {
+            /**
+             *  010-1111-1111, 010.1111.1111, 01011111111 => 형식 숫자만 남기고 제거
+             *  011, 016
+             */
+            mobile = mobile.replaceAll("\\D", "");
+            String pattern = "^01[016]\\d{3,4}\\d{4}$";
+            if (!mobile.matches(pattern)) {
+                errors.rejectValue("mobile", "Mobile");
+            }
+        }
     }
 }
