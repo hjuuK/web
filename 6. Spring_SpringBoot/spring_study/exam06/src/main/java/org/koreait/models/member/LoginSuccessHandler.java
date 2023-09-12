@@ -11,6 +11,6 @@ import java.io.IOException;
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
+        response.sendRedirect(request.getContextPath() + "/");  // 로그인 성공시 페이지 이동
     }
 }
