@@ -1,6 +1,8 @@
 package org.koreait.controllers.member;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.koreait.commons.MemberUtil;
 import org.koreait.models.member.MemberInfo;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,14 +16,26 @@ import java.security.Principal;
 @Slf4j  // extern
 @Controller
 @RequestMapping("/mypage")
+@RequiredArgsConstructor
 public class MypageController {
+    private final MemberUtil memberUtil;
+
     @GetMapping
     @ResponseBody
+    public void index() {   // private final MemberUtil memberUtil; // 별도의 편의 클래스를 이용해서 회원 정보 가져오기
+        log.info("로그인 여부 : " + memberUtil.isLogin());
+        if (memberUtil.isLogin()) { // 로그인상태일때만 회원정보 가져와서 출력
+            MemberInfo member = memberUtil.getMember(); // 회원 정보 가져오기
+            log.info(member.toString());
+        }
+    }
+    /*
     public void index() {
         MemberInfo member = (MemberInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         log.info(member.toString());
     }
+     */
 
     /*
     public void index(@AuthenticationPrincipal MemberInfo member) {
