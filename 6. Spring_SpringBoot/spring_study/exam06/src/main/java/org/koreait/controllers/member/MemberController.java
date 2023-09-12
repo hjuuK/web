@@ -1,7 +1,11 @@
 package org.koreait.controllers.member;
 
+import jakarta.validation.Valid;
+import org.hibernate.mapping.Join;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,12 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/member")
 public class MemberController {
     @GetMapping("/join")
-    public String join() {
+    public String join(@ModelAttribute JoinForm joinForm) {
         return "member/join";
     }
 
     @PostMapping("/join")
-    public String joinPs() {
+    public String joinPs(@Valid JoinForm joinForm, Errors errors) {
+        if (errors.hasErrors()) {
+            return "member/join";
+        }
         return "redirect:/member/login";
     }
 
