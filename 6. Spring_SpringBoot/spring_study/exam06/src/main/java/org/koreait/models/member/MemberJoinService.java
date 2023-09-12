@@ -24,8 +24,15 @@ public class MemberJoinService {
             return;
         }
 
-        Member member = new ModelMapper().map(form, Member.class); // 자동 build됨
-        member.setUserPw(encoder.encode(form.getUserPw())); // hash한 결과물을 엔티티에 다시 set
+        //Member member = new ModelMapper().map(form, Member.class); // 자동 build됨
+        //member.setUserPw(encoder.encode(form.getUserPw())); // hash한 결과물을 엔티티에 다시 set
+        Member member = Member.builder()
+                        .userId(form.getUserId())
+                        .userPw(encoder.encode(form.getUserPw()))
+                        .userNm(form.getUserNm())
+                        .email(form.getEmail())
+                        .mobile(form.getMobile())
+                        .build();
 
         // DB처리
         repository.saveAndFlush(member);
