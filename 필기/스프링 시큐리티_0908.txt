@@ -30,7 +30,16 @@
 	// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect/3.2.1
 	// https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa/5.0.0
 
+이미지 -> 미리캔버스, 캔바
+
+
 /error 템플릿 경로 : 응답 코드.html
+	- EL 변수
+		- status : 응답 코드
+		- path : 현재 경로
+		- error 
+		- message
+		- timestamp : 발생한 날짜와 시간
 
 6. thymeleaf-extras-springsecurity6
 	1) xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
