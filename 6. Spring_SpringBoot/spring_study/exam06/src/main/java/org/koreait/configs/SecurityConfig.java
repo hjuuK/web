@@ -40,11 +40,11 @@ public class SecurityConfig {   // localhost:3000 첫 로그인 화면 무력화
 
         /* 회원 인가 설정(접근 통제) */
 
-        http.authorizeHttpRequests(c -> {
-            c.requestMatchers("/mypage/**").authenticated() // 회원 전용 -> 로그인 이후에 사용가능한 페이지
-                    .requestMatchers("/admin/**").hasAuthority("ADMIN") // 관리자 전용 페이지 (/admin이 포함된 경로)
-                    .anyRequest().permitAll(); // 나머지 페이지는 전체 접근 가능
-        });
+//        http.authorizeHttpRequests(c -> {
+//            c.requestMatchers("/mypage/**").authenticated() // 회원 전용 -> 로그인 이후에 사용가능한 페이지
+//                    .requestMatchers("/admin/**").hasAuthority("ADMIN") // 관리자 전용 페이지 (/admin이 포함된 경로)
+//                    .anyRequest().permitAll(); // 나머지 페이지는 전체 접근 가능
+//        });
 
         // 인가에 대한 상세한 통제
         http.exceptionHandling(c -> {
