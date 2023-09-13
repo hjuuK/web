@@ -63,3 +63,26 @@
 
 POST 요청시 CSRF 토큰 검증 : 검증 실패시 403
 - 자바 스크립트 ajax 형태로 POST 데이터를 전송할시 CSRF 토큰 검증 
+
+
+
+
+const formData = new FormData();
+formData.append("userId", "user03");
+formData.append("userPw", "12345678");
+formData.append("userNm", "사용자03");
+formData.append("email", "user03@test.org");
+formData.append("agree", "true");
+
+const xhr = new XMLHttpRequest();
+xhr.open("POST", "/member/login");
+xhr.send(formData);
+xhr.onreadystate = function() {
+    if (xhr.status == 200 && xhr.readyState == XMLHttpRequest.DONE) {
+        console.log(xhr.responseText);
+    }
+};
+
+xhr.onerror = function(error) {
+    console.log(err);
+};
