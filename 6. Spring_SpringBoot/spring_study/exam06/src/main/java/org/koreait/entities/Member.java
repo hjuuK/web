@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.koreait.commons.Role;
 
 @Entity
 @Data @Builder
@@ -27,4 +28,7 @@ public class Member extends BaseEntity {    // 공통 속성으로 날짜와 시
 
     @Column(length = 11)
     private String mobile;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 }
