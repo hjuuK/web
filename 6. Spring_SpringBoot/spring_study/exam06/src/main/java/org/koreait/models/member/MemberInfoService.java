@@ -3,10 +3,15 @@ package org.koreait.models.member;
 import lombok.RequiredArgsConstructor;
 import org.koreait.entities.Member;
 import org.koreait.repositories.MemberRepository;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service    // 관리객체로 자동 생성
 @RequiredArgsConstructor
@@ -20,6 +25,10 @@ public class MemberInfoService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
 
+        List<GrantedAuthority> authorities = Arrays.asList(
+            new SimpleGrantedAuthority(member.getRole().name())
+        );
+
         return MemberInfo.builder()
                 .userNo(member.getUserNo())
                 .userId(member.getUserId())
@@ -27,6 +36,8 @@ public class MemberInfoService implements UserDetailsService {
                 .userNm(member.getUserNm())
                 .email(member.getEmail())
                 .mobile(member.getMobile())
+                .authorities(authorities) // 관리자 권한
+                .role(member.getRole())
                 .build();
     }
 }

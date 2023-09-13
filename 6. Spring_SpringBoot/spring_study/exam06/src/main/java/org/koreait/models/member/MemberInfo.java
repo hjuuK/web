@@ -2,6 +2,7 @@ package org.koreait.models.member;
 
 import lombok.Builder;
 import lombok.Data;
+import org.koreait.commons.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,6 +16,7 @@ public class MemberInfo implements UserDetails {
     private String userNm;
     private String email;
     private String mobile;
+    private Role role;
     private Collection<GrantedAuthority> authorities;
 
     @Override
