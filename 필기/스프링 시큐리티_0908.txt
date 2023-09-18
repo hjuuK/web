@@ -74,8 +74,13 @@ formData.append("userNm", "사용자03");
 formData.append("email", "user03@test.org");
 formData.append("agree", "true");
 
+const token = document.querySelector("[name='_csrf']").content;
+const headerNm = document.querySelector("[name='_csrf_header']").content;
+
 const xhr = new XMLHttpRequest();
 xhr.open("POST", "/member/login");
+xhr.setRequestHeader(headerNm, token);
+
 xhr.send(formData);
 xhr.onreadystate = function() {
     if (xhr.status == 200 && xhr.readyState == XMLHttpRequest.DONE) {
