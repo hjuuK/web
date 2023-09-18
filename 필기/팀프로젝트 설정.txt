@@ -1,0 +1,7 @@
+application-dev.properties => 개인 / 깃에 올라가지 않음 => git.ignore 에 올려야 깃에 올라가지 않음
+
+application.properties 맨 위에
+spring.profiles.active=dev 를 넣으면 application-dev.properties로 연결됨
+
+
+application-prod.properties => 배포할 때
