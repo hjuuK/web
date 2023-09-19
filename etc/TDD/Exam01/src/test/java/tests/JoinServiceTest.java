@@ -30,7 +30,7 @@ public class JoinServiceTest {
 
     @AfterEach
     void after() {
-        System.out.println("테스트 후!");
+
     }
 
     @Test
@@ -44,17 +44,39 @@ public class JoinServiceTest {
     @Test
     @DisplayName("필수 항목(userId, userNm, userPw) 체크, 필수 항목 누락시 BadRequestException 발생")
     void requiredFieldsTest() {
-        /* userId의 필수 여부 - null, 빈값이면 예외 발생 */
-        assertThrows(BadRequestException.class, () -> {
-            Member member = getMember();
+        requiredFieldEachTest("userId", "아이디");
+        requiredFieldEachTest("userPw", "비밀번호");
+        requiredFieldEachTest("userNm", "회원명");
+    }
+
+    private void requiredFieldEachTest(String field, String word) {
+        Member member = getMember();
+        if (field.equals("userId")) {
             member.setUserId(null);
+        } else if (field.equals("userPw")) {
+            member.setUserPw(null);
+        } else if (field.equals("userNm")) {
+            member.setUserNm(null);
+        }
+
+        BadRequestException thrown = assertThrows(BadRequestException.class, () -> { // 발생하면 발생한 예외객체가 반환
+           joinService.join(member);
+        });
+
+        assertTrue(thrown.getMessage().contains(word));
+
+        if (field.equals("userId")) {
+            member.setUserId("    ");
+        } else if (field.equals("userPw")) {
+            member.setUserPw("    ");
+        } else if (field.equals("userNm")) {
+            member.setUserNm("    ");
+        }
+
+        BadRequestException thrown2 = assertThrows(BadRequestException.class, () -> {
             joinService.join(member);
         });
 
-        assertThrows(BadRequestException.class, () -> {
-           Member member = getMember();
-           member.setUserId("      ");
-           joinService.join(member);
-        });
+        assertTrue(thrown2.getMessage().contains(word));
     }
 }
