@@ -1,5 +1,6 @@
 package tests;
 
+import commons.BadRequestException;
 import models.member.JoinService;
 import models.member.Member;
 import org.junit.jupiter.api.AfterEach;
@@ -43,6 +44,17 @@ public class JoinServiceTest {
     @Test
     @DisplayName("필수 항목(userId, userNm, userPw) 체크, 필수 항목 누락시 BadRequestException 발생")
     void requiredFieldsTest() {
+        /* userId의 필수 여부 - null, 빈값이면 예외 발생 */
+        assertThrows(BadRequestException.class, () -> {
+            Member member = getMember();
+            member.setUserId(null);
+            joinService.join(member);
+        });
 
+        assertThrows(BadRequestException.class, () -> {
+           Member member = getMember();
+           member.setUserId("      ");
+           joinService.join(member);
+        });
     }
 }
