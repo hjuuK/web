@@ -10,8 +10,8 @@ spring:
   # JPA 설정
   jpa:
     properties:
-      showSql: true
-      formatSql: ture
+      show_sql: true
+      format_sql: ture
       dialect: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddlAuto: create
