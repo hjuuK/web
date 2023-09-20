@@ -13,3 +13,4 @@ HttpServletRequest
 SOLID
 
 통합 테스트
+@MockMvc
