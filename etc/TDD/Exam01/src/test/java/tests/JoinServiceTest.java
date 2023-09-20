@@ -68,7 +68,7 @@ public class JoinServiceTest {
         }
 
         BadRequestException thrown = assertThrows(BadRequestException.class, () -> { // 발생하면 발생한 예외객체가 반환
-           joinService.join(member);
+            joinService.join(member);
         });
 
         assertTrue(thrown.getMessage().contains(word));

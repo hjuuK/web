@@ -1,0 +1,7 @@
+Mockito 기초 사용법
+1. 의존설정
+	- mockito-core
+	- mockito-junit-jupiter
+	
+2. 모의 객체 생성 
+3. 스텁 설정

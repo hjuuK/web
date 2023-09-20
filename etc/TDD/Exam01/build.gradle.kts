@@ -17,6 +17,8 @@ dependencies {
     testImplementation("org.mockito:mockito-junit-jupiter:5.5.0")
     annotationProcessor("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0")
+    testImplementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
 }
 
 tasks.test {
