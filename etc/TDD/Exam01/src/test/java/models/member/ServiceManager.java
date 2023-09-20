@@ -21,7 +21,9 @@ public class ServiceManager {
     }
 
     public LoginValidator loginValidator() {
-        return new LoginValidator();
+        LoginValidator validator = new LoginValidator();
+        validator.setMemberDao(memberDao());
+        return validator;
     }
 
 
@@ -31,6 +33,6 @@ public class ServiceManager {
     }
 
     public LoginService loginService() {
-        return new LoginService(loginValidator());
+        return new LoginService(memberDao(), loginValidator());
     }
 }

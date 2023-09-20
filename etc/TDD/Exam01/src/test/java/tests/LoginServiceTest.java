@@ -2,8 +2,8 @@ package tests;
 
 import commons.BadRequestException;
 import jakarta.servlet.http.HttpServletRequest;
-import models.member.LoginService;
-import models.member.ServiceManager;
+import jakarta.servlet.http.HttpSession;
+import models.member.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,11 +17,26 @@ public class LoginServiceTest {
 
     private LoginService service;
     private HttpServletRequest request;
+    private HttpSession session;
+    private JoinService joinService;
+    private Member member;
 
     @BeforeEach
     void init() {
         service = ServiceManager.getInstance().loginService();
+        joinService = ServiceManager.getInstance().joinService();
         request = mock(HttpServletRequest.class);
+        session = mock(HttpSession.class);
+
+        given(request.getSession()).willReturn(session);
+
+        member = Member.builder()
+                .userId("user" + System.currentTimeMillis())
+                .userPw("12345678")
+                .userNm("사용자")
+                .email("user@test.org")
+                .build();
+        joinService.join(member);
     }
 
     private void getRequestData(String userId, String userPw) {
@@ -30,7 +45,7 @@ public class LoginServiceTest {
     }
 
     private void getSuccessData() {
-        getRequestData("user" + System.currentTimeMillis(), "12345678");
+        getRequestData(member.getUserId(), member.getUserPw());
     }
 
     @Test
@@ -41,13 +56,22 @@ public class LoginServiceTest {
     }
 
     @Test
+    @DisplayName("아이디로 회원이 조회되지 않으면 UserNotFoundException 발생")
+    void userNotExistsTest() {
+        assertThrows(UserNotFoundException.class, () -> {
+            getRequestData(member.getUserId() + "*", member.getUserPw());
+            service.login(request);
+        });
+    }
+
+    @Test
     @DisplayName("필수 항목(userId, userPw) 검증, 실패시 BadRequestException발생")
     void requiredFieldTest() {
         assertAll(
-                () -> requiredFieldEachTest(null, "123456", "아이디"),
-                () -> requiredFieldEachTest("    ", "123456", "아이디"),
-                () -> requiredFieldEachTest("user" + System.currentTimeMillis(), null, "비밀번호"),
-                () -> requiredFieldEachTest("user" + System.currentTimeMillis(), "      ", "비밀번호")
+                () -> requiredFieldEachTest(null, member.getUserPw(), "아이디"),
+                () -> requiredFieldEachTest("    ", member.getUserPw(), "아이디"),
+                () -> requiredFieldEachTest(member.getUserId(), null, "비밀번호"),
+                () -> requiredFieldEachTest(member.getUserId(), "      ", "비밀번호")
         );
     }
 
