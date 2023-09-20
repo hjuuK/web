@@ -1,10 +1,7 @@
 package tests;
 
 import commons.BadRequestException;
-import models.member.DuplicateUserIdException;
-import models.member.JoinService;
-import models.member.Member;
-import models.member.ServiceManager;
+import models.member.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +15,7 @@ public class JoinServiceTest {
     @BeforeEach
     void init() {
         joinService = ServiceManager.getInstance().joinService();
+        MemberDao.members.clear();
     }
 
     private Member getMember() {
