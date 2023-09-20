@@ -1,7 +1,7 @@
 package models.member;
 
 public class ServiceManager {
-    // 싱글턴 패턴
+
     private static ServiceManager instance;
 
     public static ServiceManager getInstance() {
@@ -20,7 +20,17 @@ public class ServiceManager {
         return new JoinValidator();
     }
 
+    public LoginValidator loginValidator() {
+        return new LoginValidator();
+    }
+
+
     public JoinService joinService() {
+
         return new JoinService(memberDao(), joinValidator());
+    }
+
+    public LoginService loginService() {
+        return new LoginService(loginValidator());
     }
 }

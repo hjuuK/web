@@ -4,4 +4,12 @@ Mockito 기초 사용법
 	- mockito-junit-jupiter
 	
 2. 모의 객체 생성 
+HttpServletRequest
+	.getParameter
+
 3. 스텁 설정
+	- 가짜 데이터
+	
+SOLID
+
+통합 테스트
