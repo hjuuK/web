@@ -8,5 +8,5 @@ public class JSONData<T> {
     private boolean success;
     private T data;
     private String message;
-    private HttpStatus status;
+    private HttpStatus status = HttpStatus.OK; // 200
 }
