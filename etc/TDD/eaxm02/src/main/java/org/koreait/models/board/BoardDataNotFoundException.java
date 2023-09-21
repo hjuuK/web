@@ -1,7 +1,10 @@
 package org.koreait.models.board;
 
-public class BoardDataNotFoundException extends RuntimeException {
+import org.koreait.commons.CommonException;
+import org.springframework.http.HttpStatus;
+
+public class BoardDataNotFoundException extends CommonException {
     public BoardDataNotFoundException() {
-        super("등록되지 않은 게시글입니다.");
+        super("등록되지 않은 게시글입니다.", HttpStatus.NOT_FOUND);
     }
 }
