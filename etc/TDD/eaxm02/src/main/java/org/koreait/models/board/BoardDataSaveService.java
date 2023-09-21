@@ -12,10 +12,26 @@ public class BoardDataSaveService {
     private final BoardDataRepository repository;
 
     public void save(BoardForm form) {
+        String poster = form.getPoster();
+        String subject = form.getSubject();
+        String content = form.getContent();
+
+        if (poster == null && poster.isBlank()) {
+            throw new BoardDataValidationException("작성자를 입력하세요.");
+        }
+
+        if (subject == null && subject.isBlank()) {
+            throw new BoardDataValidationException("제목을 입력하세요.");
+        }
+
+        if (content == null && content.isBlank()) {
+            throw new BoardDataValidationException("내용을 입력하세요.");
+        }
+
         BoardData data = BoardData.builder()
-                .poster(form.getPoster())
-                .subject(form.getSubject())
-                .content(form.getContent())
+                .poster(poster)
+                .subject(subject)
+                .content(content)
                 .build();
         repository.saveAndFlush(data);
     }
