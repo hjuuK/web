@@ -7,8 +7,9 @@ spring:
   # JPA 설정
   jpa:
     properties:
-      showSql: true
-      formatSql: ture
+      show_sql: true
+      format_sql: ture
+      use_sql_comments: true
       dialect: org.hibernate.dialect.H2Dialect
     hibernate:
       ddlAuto: create
