@@ -16,15 +16,15 @@ public class BoardDataSaveService {
         String subject = form.getSubject();
         String content = form.getContent();
 
-        if (poster == null && poster.isBlank()) {
+        if (poster == null || poster.isBlank()) {
             throw new BoardDataValidationException("작성자를 입력하세요.");
         }
 
-        if (subject == null && subject.isBlank()) {
+        if (subject == null || subject.isBlank()) {
             throw new BoardDataValidationException("제목을 입력하세요.");
         }
 
-        if (content == null && content.isBlank()) {
+        if (content == null || content.isBlank()) {
             throw new BoardDataValidationException("내용을 입력하세요.");
         }
 
