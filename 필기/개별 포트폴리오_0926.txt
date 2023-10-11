@@ -1,0 +1,201 @@
+개별 포트폴리오
+1. 채팅 서버 구출(BE)
+CORS
+2. 리액트 기초(FE)
+	- 개발서버 구축(node.js)
+	- vscode
+	- npm(node package manager)
+	
+		npm install 패키지명
+		npm i 패키지명
+					-g 
+						yarn
+						
+		yarn add
+		
+		
+				yarn start
+					Starts the development server.
+
+				yarn build
+					Bundles the app into static files for production.
+
+				yarn test
+					Starts the test runner.
+
+				yarn eject
+					Removes this tool and copies build dependencies, configuration files
+					and scripts into the app directory. If you do this, you can’t go back!
+		
+		npm init ...
+		yarn create ...
+	
+	
+props
+	children : 태그 안쪽의 내용을 가져올 때 사용
+		
+{...}
+
+on이벤트
+
+onclick="이벤트 처리기" => onClick = "이벤트 처리기"
+onchange="이벤트 처리기" => onChange = "이벤트 처리기"
+
+
+
+------------------------
+0927
+1. 리액트 기초
+	css
+	sass
+	scss
+	
+	npm i sass
+	yarn add sass
+	
+	.module.css -> 무작위문자_선택자 명칙
+	
+	styled-components
+	
+SPA(Single Page Application)
+	react-router-dom
+	
+1) react-router-dom
+	useParams() : 경로 변수 값
+	useNavigate() : location + history
+	useLocation() : location 객체
+	location.href -> 방문 기록
+	location.replace(...) -> 방문 기록 X
+	
+	searchParams // URLSearchParams
+		get('...')
+	
+2) Hook
+- useState
+- useEffect
+	: 페이지 렌더링 직후에 해야할 작업
+- useReducer
+	: 더 다양한 컴포넌트 상황에 따라 다양한 상태를 다른 값으로 업데이트해주고 싶을 때 사용하는 Hook
+	: type - 액션 종류
+	: 
+- useMemo
+- useCallback
+- useRef
+
+
+yarn add axios
+npm i axios
+
+.env
+.env.local
+.env.development.local
+.env.production.local
+	
+2. 채팅 UI 만들기
+
+
+-------------------------------
+https://jsonplaceholder.typicode.com/posts
+
+
+---------------------------------- Rooms.js
+
+import { useEffect, useState, useReducer } from "react";
+import axios from 'axios';
+
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'INCREMENT':
+            return { value: state.value + action.value };
+        case 'DECREMENT':
+            return { value: state.value - action.value };
+        default:
+            return state;
+    }
+}
+
+const Rooms = () => {
+    /*
+    const [state, dispatch] = useReducer(reducer, { value : 0 }); // 현재 상태값이 담겨있는 객체
+    const [posts, setPosts] = useState([]);
+    const [reload, setReload] = useState(false);
+
+    useEffect(() => {
+        axios({
+            url: "https://jsonplaceholder.typicode.com/posts",
+            method : "get"
+        })
+        .then((res) => {
+            setPosts(res.data);
+        })
+        .catch((err) => console.error(err));
+        console.log("로딩...");
+    }, [reload])
+    
+    const lis = posts.map(p => (<li key={p.id}>{p.title}</li>));
+    */
+
+    return (
+        <>
+            
+            <p>{state.value}</p>
+            <button onClick={() => dispatch({type:'INCREMENT', value : 2})}>+2</button>
+            <button onClick={() => dispatch({type:'DECREMENT', value : 3})}>-3</button>
+            <br />
+
+            <button onClick={() => setReload(!reload)}>클릭{reload}</button>
+            <ul>
+                {lis}
+            </ul>
+            
+        </>
+    );
+};
+
+export default Rooms;
+
+--------------------------------------------
+
+import { useMemo, useState, useCallback, useRef } from 'react';
+
+function factorial(num) {
+    let total = 1;
+    for (let i = 1; i <= num; i++) {
+        total *= i;
+    }
+    
+    return total;
+}
+
+const Rooms = () => {
+    const numEl = useRef();
+    const count = useRef(0);
+
+    const [num, setNum] = useState(0);
+
+    const handleChange = useCallback((e) => {
+        setNum(e.target.value);
+    }, []);
+
+    const result = useMemo(() => factorial(num), [num]);
+
+    const handleClick = useCallback(() => {
+        numEl.current.value = '';
+        setNum(0);
+        count.current++;
+        console.log(count);
+    }, [numEl]);
+
+    return (
+        <>
+            <input ref={numEl} type="number" onChange={handleChange} /> = {result}
+            <button onClick={handleClick}>초기화</button>         
+        </>
+    );
+};
+
+export default Rooms;
+
+--------------------------------------------
+
