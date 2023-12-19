@@ -67,3 +67,14 @@ C(Controller)
 				
 				- 별도의 체크 함수를 통해서 검증
 			
+			// maven central
+				 jbcypt
+				 https://central.sonatype.com/artifact/org.mindrot/jbcrypt/0.4
+				 
+				 
+				 
+				 
+0817
+칸반보드
+1. 에디터에 이미지 추가 및 파일 첨부 구현하기
+1kb - 1024

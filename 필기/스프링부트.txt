@@ -1,0 +1,101 @@
+스프링부트
+1. 설치 및 설정 
+
+1) starter 의존성
+2) 기본 패키지 하위 경로 : 컴포넌트 스캔 범위 설정
+3) XML 설정 -> 자바 코드 수준의 설정 
+4) web starter -> 톰캣 서버 내장 
+	-> jar 배포 
+	-> 설정 오류도 방지 
+5) 컨텍스트 경로  : / (기본)
+6) WebMvcConfigurer 인터페이스 
+
+WEB-INF -> 노출 X : web.xml 
+
+빌드 -> 서버 마다 다른 설정 파일 profile 설정을 통해 분리 
+
+mvn clean package : 배포 파일 생성 -> target디렉토리에 ....jar 생성 
+
+java -jar 파일명.jar 
+
+
+java -jar -Dspring.profiles.active=real 파일명.jar
+-> 설정 파일 application-real.properties
+
+
+JSON 응답과 요청 처리
+	- 의존성 
+		jackson-databind 
+		jackson-datatype-jsr310 : java Date Time API 
+
+1. JSON 개요
+	JSON(JavaScript Object Notation) : 자바 스크립트 객체 표기법
+	{ "이름" : "값", "이름" : "값" } 의 문자열
+
+자바 객체 -> JSON 문자열 변환 
+JSON 문자열 -> 자바 객체
+
+2. @RestController 
+	-> 응답 : JSON 문자열(자바 객체 -> JSON  문자열로 변환) : 응답 헤더 application/json
+	-> 일반 문자열 : String
+	-> void : 출력 데이터 X(body 없는 형태)
+	-> 스프링5에서 추가된 애노테이션
+	
+참고)
+	slf4j api + logback classic
+	
+	Lombok 
+	@Log 
+	@Slf4j 
+	@Log4j
+	
+	log 변수 
+	
+	FATAL
+	ERROR
+	WARN
+	INFO
+	DEBUG
+	TRACE
+	
+3. @ResponseBody
+	: 메서드 단위 REST 처리 
+	: 일반 컨트롤러에서 일부 메서드만 JSON 응답 변경할 때 
+	
+4. @Jsonlgnore 
+	-> JSON  변환 제외 
+	
+5. @JsonFormat 
+	- 날짜의 형식화
+-------------------------------------- 
+
+6. @RequestBody 
+	: content-type: application/json 형식을 변환하기 위해 알려주는 애노테이션 
+	
+	@RequestBody 커맨드 객체
+
+참고)
+	기본 POST 요청 방식 : 서블릿이 기본 해석하는 요청 데이터 형식
+	content-type : application/x-www-form-urlencoded
+		이름=값&이름=값&....
+
+
+7. ResponseEntity
+	- 응답 상태 코드를 상세 하게 설정
+	- 응답 body를 출력, 미출력 통제
+	
+1) status(..) : 응답 상태 코드 
+2) body(..) : 출력 body 
+3) build() : body 출력 X
+
+ 참고) 
+	기본 응답 코드 200 / 500
+	201
+	400
+	401
+	404
+	500
+	
+8. @Valid
+9. @ExceptionHandler
+- @RestControllerAdvice

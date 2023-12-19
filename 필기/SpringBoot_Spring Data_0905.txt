@@ -159,6 +159,7 @@ BooleanBuilder --> Predicate 인터페이스의 구현체
 	fetch
 		FetchType.EAGER : 즉시로딩 - 필요할때만 설정
 						 .LAZY : 지연로딩 - 글로벌 전략 : 전체 엔티티는 기본 설정을 지연로딩
+								- 목록 조회시 N+1 문제가 발생
 
 -----------------------------
 H2 DataBase : 연습용 DB
